@@ -146,6 +146,16 @@ p {
   box-sizing: border-box; /* Include padding/border in total width */
 }
 
+/* Ensure lottie-interactive elements also respect rounded corners */
+.media-column lottie-interactive {
+  border-radius: 15px; /* Apply the desired border-radius directly */
+  overflow: hidden; /* Crucial for clipping the content within the rounded corners */
+  display: block; /* Ensures it behaves like a block element for sizing */
+  width: 200px; /* Take full width of its container */
+  height: 200px; /* Take full height of its container */
+  cursor: pointer;
+}
+
 .media-column img,
 .media-column video,
 .media-column canvas {
@@ -794,4 +804,23 @@ footer {
     max-width: 90%; /* Allows boxes to take up more width when stacked */
     margin-bottom: 20px; /* Add some space between stacked boxes */
   }
+}
+
+.tutorial-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Pushes text to left, button to right */
+  margin: 20px 0px; /* Space above this section */
+  padding: 16px 20px;
+  border: 1.5px solid #e0e0e0; /* Light grey border */
+  border-radius: 10px; /* Rounded corners */
+  background-color: #f9f9f9; /* Slightly off-white background */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 8px; /* Gap between text and button on wrap */
+}
+
+.tutorial-box p {
+  font-size: 0.9em; /* Adjust as needed */
+  color: #404040;
+  margin: 0; /* Remove default paragraph margin */
 }

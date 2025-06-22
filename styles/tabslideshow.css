@@ -2,7 +2,7 @@
 .tab-section {
   background-color: #ffffff; /* Or a light background to differentiate */
   border-radius: 15px;
-  border: 1px solid #e0e0e0; /* Thin gray border */
+  border: 1.5px solid #e0e0e0; /* Thin gray border */
   padding: 8px;
   margin-top: 20px; /* Space from previous section */
 }
@@ -46,26 +46,36 @@
 }
 
 .tab-content {
+  /* Initial state: Hidden and collapsed */
   opacity: 0;
-  max-height: 0; /* Initially collapsed */
-  overflow: hidden; /* Hide overflow when collapsed */
-  transform: translateY(10px); /* Initial state for slide-down effect */
-  /* Adjusted transition property to manage display property delay */
-  transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease,
-    display 0s 0.5s; /* Delay display: none */
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(10px);
   padding: 10px; /* Inner padding for content */
   box-sizing: border-box; /* Ensure padding is included in max-height */
-  display: none; /* Hide the element completely from document flow */
+
+  /* IMPORTANT: Delay display: none when hiding, but apply display: block immediately when showing */
+  /* This ensures the element is still in the flow during the fade/slide out,
+     then removed after the transition. When showing, it becomes display: block
+     immediately to allow the fade/slide in. */
+  transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease;
+  /* Add a delay for 'display' property when transitioning *out* */
+  display: block; /* Default to block, will be hidden by opacity/max-height for inactive */
+}
+
+.tab-content:not(.active) {
+  /* When not active, hide it completely after the transition */
+  transition-delay: 0s, 0s, 0s, 0.5s; /* Delay for 'display' property */
+  display: none;
 }
 
 .tab-content.active {
+  /* Active state: Visible and expanded */
   opacity: 1;
   max-height: 1000px; /* Sufficiently large value to show all content */
-  transform: translateY(0); /* Slide up to final position */
-  /* Adjusted transition property to make display property immediate */
-  transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease,
-    display 0s 0s; /* Make display: block immediate */
-  display: block; /* Show the element when active */
+  transform: translateY(0);
+  display: block; /* Make sure it's block when active */
+  transition-delay: 0s; /* No delay when becoming active */
 }
 
 .tab-content h3 {
