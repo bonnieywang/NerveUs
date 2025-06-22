@@ -170,8 +170,6 @@
   position: relative;
   margin: auto;
   background-color: #fff; /* White background for the slide container */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden; /* Ensures image corners are rounded with container */
 }
 
@@ -227,7 +225,7 @@
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  background-color: #bbb;
+  background-color: #e0e0e0;
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;
@@ -237,7 +235,7 @@
   background-color: #6e6eff; /* Purple for active dot */
 }
 .dot:hover {
-  background-color: #a797ff; /* Active dot color, matching arrow */
+  background-color: #9c9cff; /* Active dot color, matching arrow */
 }
 
 /* Fading animation */
