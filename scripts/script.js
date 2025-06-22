@@ -340,6 +340,23 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   setupSliderIndicator();
 
+  const setupSliderIndicator2 = () => {
+    const slider = document.getElementById("slider2"); // Assuming your second slider has ID "slider2"
+    const sliderIndicator = document.getElementById("sliderIndicator2");
+
+    if (!slider || !sliderIndicator) return;
+
+    const hideIndicator = () => {
+      sliderIndicator.classList.add("hidden");
+    };
+
+    slider.addEventListener("input", hideIndicator);
+    slider.addEventListener("mousedown", hideIndicator);
+    slider.addEventListener("touchstart", hideIndicator);
+    slider.addEventListener("focus", hideIndicator);
+  };
+  setupSliderIndicator2(); // Call the second setup function
+
   // --- Tabbed Slideshow Functionality ---
   const tabButtons = document.querySelectorAll(".tab-button");
   const tabContents = document.querySelectorAll(".tab-content");
