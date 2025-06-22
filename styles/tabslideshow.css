@@ -164,3 +164,93 @@
   }
 }
 /* --- End Nested Media-Text Column Styles --- */
+
+.slideshow-container {
+  max-width: 1200px;
+  position: relative;
+  margin: auto;
+  background-color: #fff; /* White background for the slide container */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensures image corners are rounded with container */
+}
+
+.mySlides {
+  display: none;
+}
+
+.mySlides img {
+  border-radius: 8px; /* Optional: if you want the image itself to have rounded corners */
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: #a797ff; /* Changed to white for better contrast on purple arrows */
+  font-weight: bold;
+  font-size: 30px; /* Increased size for prominence */
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  background-color: none; /* Light purple, similar to the image */
+  opacity: 0.8; /* Slightly transparent */
+  text-decoration: none; /* Remove underline for links */
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background with a little more opacity */
+.prev:hover,
+.next:hover {
+  color: #6e6eff; /* Changed to white for better contrast on purple arrows */
+  opacity: 1;
+}
+
+/* The dots/bullets/indicators */
+.dot-container {
+  justify-content: center;
+  margin: auto;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.dot.active {
+  background-color: #6e6eff; /* Purple for active dot */
+}
+.dot:hover {
+  background-color: #a797ff; /* Active dot color, matching arrow */
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
