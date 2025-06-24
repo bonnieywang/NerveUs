@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleBoneOverlayBtn1 = document.getElementById("toggleBoneOverlayBtn");
   const tickmarks1 = document.getElementById("tickmarks");
 
-  const keyPoints1 = [0, 0.5, 1]; // Tick mark positions (normalized)
+  const keyPoints1 = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]; // Tick mark positions (normalized)
   const snapThreshold1 = 0.05; // How close the slider needs to be to snap
 
   const animConfig1 = {
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid meet",
     },
-    path: "../../pages/data1.json", // Path to your first animation JSON
+    path: "../../pages/layersofnerve.json", // Path to your first animation JSON
   };
 
   const animInstance1 = lottie.loadAnimation(animConfig1);
@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
     slider1.value = snappedValue;
-    animInstance1.goToAndStop(snappedValue * 30.0, false);
+    animInstance1.goToAndStop(snappedValue * 42.0, false);
   }
 
   // Overlay toggle buttons for slider 1
