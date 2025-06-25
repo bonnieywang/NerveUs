@@ -50,22 +50,52 @@
 
 /* Specific style for the expandable heading */
 .toc ul li.main-section .toc-main-section-link {
-  font-weight: 600; /* Keep bold as it's a main section */
-  font-size: 16px; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
-  color: #404040; /* Match the color of .toc h1 */
-  display: block; /* Ensure it takes up full width for padding */
-  padding: 10px 16px 0px 16px; /* Match padding of other TOC items */
-  cursor: pointer; /* Change cursor to default to indicate non-clickable */
-  background-color: transparent; /* Ensure no background on hover */
+  /* Removed: font-weight: 600; */
+  font-size: 16px;
+  color: #757575;
+  display: flex; /* Keep flex container */
+  justify-content: flex-start; /* ALIGN TO THE LEFT */
+  align-items: center; /* Vertically center text and arrow */
+  padding: 10px 16px 0px 16px;
+  cursor: pointer;
+  background-color: transparent;
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .toc ul li.main-section .toc-main-section-link:hover {
-  color: #6e6eff;
+  color: #404040;
   border-radius: 10px;
-  background: transparent;
+  background: #f7f8ff;
 }
 
+/* Arrow icon for expandable sections */
+.toc ul li.main-section .toc-main-section-link::after {
+  content: "\276F"; /* Unicode character for down-pointing triangle */
+  font-size: 0.8em;
+  margin-left: 10px; /* Adjust this value for desired spacing between text and arrow */
+  /* REMOVED: display: inline-block; - it's already implicitly block-like in a flex container */
+  transition: transform 0.2s ease-out;
+  color: #757575;
+  transform: rotate(90deg); /* Start pointing UP when collapsed */
+}
+
+/* Rotate arrow when the sub-TOC is expanded */
+.toc ul li.main-section .sub-toc.expanded + .toc-main-section-link::after,
+.toc ul li.main-section .toc-main-section-link.active-toc-link::after {
+  transform: rotate(
+    -90deg
+  ); /* Points DOWN when expanded (back to original rotation) */
+}
+
+/* When the main-section link is active and its sub-toc is expanded, it should have the active background */
+.toc ul li.main-section .toc-main-section-link.active-toc-link {
+  color: #6e6eff;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.toc ul li.main-section .toc-main-section-link.active-toc-link::after {
+  color: #6e6eff; /* Active arrow color */
+}
 /* Style for the sub-sections container (initially hidden) */
 .sub-toc {
   list-style-type: none;

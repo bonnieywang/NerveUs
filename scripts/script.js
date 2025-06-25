@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let scrollTimeout;
     window.addEventListener("scroll", () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateActiveTocLink, 50); // Adjust debounce time if needed
+      scrollTimeout = setTimeout(updateActiveTocLink, 30); // Adjust debounce time if needed
     });
 
     updateActiveTocLink(); // Initial call on page load
