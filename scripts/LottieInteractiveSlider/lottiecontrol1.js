@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const tickmarks1 = document.getElementById("tickmarks");
 
   const keyPoints1 = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]; // Tick mark positions (normalized)
-  const snapThreshold1 = 0.05; // How close the slider needs to be to snap
+  const snapThreshold1 = 0.005; // How close the slider needs to be to snap
 
   const animConfig1 = {
     container: animationContainer1,
@@ -116,12 +116,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onEnterAnimationFrame1(e) {
-    slider1.value = e.currentTime / (animInstance1.totalFrames - 1);
+    // e.currentTime is the current frame number.
+    // totalFrames is the total number of frames.
+    // We need to normalize currentFrame to a 0-1 value for the slider.
+    slider1.value = e.currentTime / (animInstance1.totalFrames - 1); // Normalize to 0-1 for slider
   }
 
   function onAnimConfigReady1(e) {
     console.log("Lottie config_ready for slider 1");
-    slider1.setAttribute("max", animInstance1.totalFrames - 1);
+    // Set slider max to 1 (for 0-1 range)
+    slider1.setAttribute("max", 1); // Keep max as 1
+    slider1.setAttribute("step", 0.001); // Add a step for smoother slider movement
     slider1.addEventListener("mousedown", onSliderDown1);
   }
 
@@ -252,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onSliderChange1(e) {
-    let rawValue = parseFloat(slider1.value);
+    let rawValue = parseFloat(slider1.value); // rawValue will be 0-1
     let snappedValue = rawValue;
 
     for (let i = 0; i < keyPoints1.length; i++) {
@@ -261,8 +266,23 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
       }
     }
-    slider1.value = snappedValue;
-    animInstance1.goToAndStop(snappedValue * 42.0, false);
+    slider1.value = snappedValue; // Slider value remains 0-1
+
+    const totalAnimationFrames = animInstance1.totalFrames;
+    // Calculate the target frame (e.g., 0 to 260 for a 261-frame animation)
+    const targetFrame = snappedValue * (totalAnimationFrames - 1); // Adjusted for 0-indexed frames for goToAndStop
+    // Lottie usually uses 0-indexed frames, so if it has 261 frames,
+    // they are frames 0 through 260.
+    // Multiplying by totalFrames-1 ensures that a snappedValue of 1
+    // sends it to the last valid frame number.
+
+    // Use Math.round to ensure you're passing an integer frame number
+    animInstance1.goToAndStop(Math.round(targetFrame), true); // THIS IS THE CRUCIAL CHANGE: set `true`
+
+    console.log(`Slider snappedValue (0-1): ${snappedValue.toFixed(2)}`);
+    console.log(
+      `Calculated Lottie Frame (rounded): ${Math.round(targetFrame)}`
+    );
   }
 
   // Overlay toggle buttons for slider 1
@@ -290,19 +310,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Tick marks for slider 1
   const sliderWidth1 = slider1.offsetWidth;
-  const thumbWidth1 = 25;
+  const thumbWidth1 = 25; // Assuming your thumb is 25px wide
   const thumbOffset1 = thumbWidth1 / 2;
 
   keyPoints1.forEach((point, index) => {
+    // keyPoints1 are already 0-1 normalized
     const tick = document.createElement("div");
     tick.classList.add("tick");
-    let tickPosition = point * sliderWidth1;
-    if (index === 0) {
-      tickPosition = thumbOffset1;
-    } else if (index === keyPoints1.length - 1) {
-      tickPosition = sliderWidth1 - thumbOffset1;
-    }
-    tick.style.left = `${tickPosition}px`;
+
+    // Calculate position based on the normalized point, adjusting for thumb width
+    let tickPositionPx = point * (sliderWidth1 - thumbWidth1) + thumbOffset1;
+
+    tick.style.left = `${tickPositionPx}px`;
     tickmarks1.appendChild(tick);
   });
 
