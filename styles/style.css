@@ -215,48 +215,90 @@ p {
   margin-bottom: 2px;
 }
 
-/* navigation bar */
+/* navigation box */
 header {
   color: #757575;
-  font-size: 1.1em; /* Adjusted from 1em (1 * 20px = 20px, now 1.25 * 16px = 20px) */
-  font-weight: 600; /* semibold */
-  line-height: 1.5; /* Changed to a numeric value */
-  display: flex; /* Enable flexbox for the navigation bar */
-  justify-content: space-between; /* Space items out */
-  align-items: center; /* Vertically center items */
-  padding: 16px 20px; /* Add padding around the nav content */
-  flex-wrap: wrap;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow */
-  position: relative; /* Needed for absolute positioning of the rectangle */
-  top: 0; /* Ensure the navbar stays at the top */
-  left: 0;
-  width: 100%; /* Ensure the navbar takes the full width */
-  z-index: 10; /* Ensure header is above other elements */
+  font-size: 1.1em;
+  font-weight: 600;
+  line-height: 1.5;
+  display: flex;
+  justify-content: center; /* Center the .header-inner container */
+  align-items: center;
+  padding: 0; /* No padding on header itself */
+  flex-wrap: wrap; /* Allows header to wrap if content inside overflows */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* --- Make it Sticky --- */
+  position: sticky; /* Changed from relative to sticky */
+  top: 0; /* Stick to the very top */
+  width: 100%; /* Ensure it spans full width when sticky */
+  z-index: 100; /* Higher than TOC (z-index: 10) to be on top */
+  background-color: #ffffff; /* Explicit background for when it scrolls over content */
+  /* --- End Sticky --- */
+  box-sizing: border-box; /* Good practice */
+}
+
+/* New container for centering the content */
+.header-inner {
+  display: flex; /* Keep flexbox for logo and nav-links */
+  justify-content: space-between; /* Space them out */
+  align-items: center;
+  max-width: 1200px; /* **This centers your content** */
+  width: 100%; /* Allows it to shrink on smaller screens */
+  padding: 16px 20px; /* Add desired padding inside this container */
+  box-sizing: border-box; /* Include padding in width */
 }
 
 header::after {
-  /* Add pseudo-element for the purple rectangle */
+  /* This remains untouched, tied to the full-width header */
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px; /* Height of the rectangle */
-  background-color: #edf0ff; /* Purple color */
+  height: 4px;
+  background-color: #edf0ff;
 }
 
 header .logo {
-  /* width: auto;  Remove this line */
-  margin-right: auto; /* Push logo to the left */
-  margin-left: 20px; /* Add left margin to logo */
+  margin-right: auto;
+  margin-left: 0; /* Remove fixed left margin */
 }
 header .nav-links {
   margin-left: auto;
-  margin-right: 20px; /* Add right margin to nav-links */
+  margin-right: 0; /* Remove fixed right margin */
+}
+
+/* No change needed for this part, as it relates to internal dropdown styles */
+.dropdown-main-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive adjustments for the inner header content */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column; /* Stack columns vertically on smaller screens */
+    align-items: flex-start; /* Align stacked content to the left */
+    padding: 16px 20px; /* Ensure padding on mobile */
+  }
+  header .nav-links {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%; /* Ensure nav-links take full width on mobile */
+  }
+  .dropdown-main-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%; /* Ensure menu takes full width on mobile */
+  }
 }
 
 .logo img {
-  height: 64px;
+  height: 56px;
   width: auto; /* Maintain aspect ratio */
   display: block;
 }
@@ -278,7 +320,7 @@ header .nav-links {
   display: block;
   color: #757575;
   text-align: center;
-  padding: 16px 48px;
+  padding: 16px 36px;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -345,144 +387,147 @@ header .nav-links {
   color: #000000;
 }
 
-/* CSS rules to apply when the condition is true */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  header .nav-links {
-    margin-left: 0;
-  }
-  .dropdown-main-menu {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
+/* Footer Styles */
 /* Footer Styles */
 footer {
-  background-color: #edf0ff;
-  display: flex;
-  justify-content: space-between; /* Pushes left and right sections to edges */
-  align-items: center; /* Vertically aligns items in the center */
-  padding: 40px 60px; /* Adjust padding as needed */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  margin-top: 60px; /* Add some space above the footer to separate from main content */
-  border-top: 0px solid #c5c5c5; /* Optional: Add a subtle top border */
+  background-color: #edf0ff; /* This background will now span full width */
+  /* Remove flex properties and padding from here */
+  padding: 0; /* No padding on the footer itself */
+  display: flex; /* Make footer a flex container */
+  justify-content: center; /* Center the .footer-inner child */
+  align-items: center; /* Vertically align the .footer-inner */
+  flex-wrap: wrap; /* Allows footer to wrap if content inside overflows */
+  margin-top: 60px;
+  border-top: 0px solid #c5c5c5;
+  width: 100%; /* Ensure it spans full width */
+  box-sizing: border-box; /* Good practice */
 }
 
+/* NEW CONTAINER for centering the content within the full-width footer */
+.footer-inner {
+  display: flex; /* Pushes left and right sections to edges */
+  justify-content: space-between;
+  align-items: center; /* Vertically aligns items in the center */
+  padding: 40px 20px; /* Adjust padding here for the inner content */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  max-width: 1200px; /* Match your .header-inner and .main-content max-width */
+  width: 100%; /* Allows it to shrink on smaller screens */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Existing .footer-left and .footer-right styles (no changes needed for these blocks) */
 .footer-left {
   display: flex;
   align-items: center;
-  gap: 30px; /* Space between logo and text block */
-  flex-wrap: wrap; /* Allow logo and text to wrap if screen is too small */
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .footer-logo {
-  height: 144px; /* Matches the header logo height */
-  width: auto; /* Maintains aspect ratio */
+  height: 144px;
+  width: auto;
 }
 
 .footer-text h3 {
-  font-size: 1.5em; /* Adjusted from 1.6em (1.6 * 20px = 32px, now 2 * 16px = 32px) */
-  font-weight: 600; /* Semibold for heading */
+  font-size: 1.5em;
+  font-weight: 600;
   color: #757575;
-  margin-bottom: 8px; /* Space below the heading */
+  margin-bottom: 8px;
 }
 
 /* Style for the About NerveUs link within the footer-text h3 */
 .footer-text h3 a {
-  color: #757575; /* Match the original h3 color */
-  text-decoration: none; /* Remove underline */
+  color: #757575;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .footer-text h3 a:hover {
-  color: #6e6eff; /* Change color on hover to purple */
+  color: #6e6eff;
 }
 
 .footer-text p {
-  font-size: 1em; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
-  font-weight: 300; /* Light weight */
+  font-size: 1em;
+  font-weight: 300;
   color: #757575;
-  margin-bottom: 4px; /* Space between paragraphs */
+  margin-bottom: 4px;
 }
 
 .footer-text p:last-child {
-  margin-bottom: 0; /* No margin after the last paragraph */
+  margin-bottom: 0;
 }
 
 .footer-text a {
-  color: #6e6eff; /* Purple for links, matching your site's active color */
+  color: #6e6eff;
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .footer-text a:hover {
-  color: #000000; /* Darker on hover */
+  color: #000000;
 }
 
 .footer-right ul {
-  list-style: none; /* Remove bullet points */
+  list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  flex-direction: column; /* Stack links vertically */
-  align-items: flex-end; /* Align links to the right within their container */
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .footer-right li {
-  margin-bottom: 8px; /* Space between stacked links */
+  margin-bottom: 8px;
 }
 
 .footer-right li:last-child {
-  margin-bottom: 0; /* No margin after the last link */
+  margin-bottom: 0;
 }
 
 .footer-right a {
-  font-size: 1.1em; /* Adjusted from 1em (1 * 20px = 20px, now 1.25 * 16px = 20px) */
+  font-size: 1.1em;
   font-weight: 600;
   color: #757575;
   text-decoration: none;
-  padding: 5px 0; /* Add some vertical padding for clickable area */
+  padding: 5px 0;
   transition: color 0.2s ease;
 }
 
 .footer-right a:hover {
-  color: #000000; /* Darker on hover */
+  color: #000000;
 }
 
 /* Responsive adjustments for footer */
 @media (max-width: 768px) {
-  footer {
-    flex-direction: column; /* Stack sections vertically */
-    align-items: flex-start; /* Align all content to the left */
-    padding: 30px 20px;
+  .footer-inner {
+    /* Target the inner container for stacking */
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 20px; /* Use smaller padding for mobile */
   }
 
   .footer-left {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
-    margin-bottom: 30px; /* Space between left and right sections when stacked */
-    text-align: left; /* Ensure text is left-aligned within its column */
+    margin-bottom: 30px;
+    text-align: left;
   }
 
   .footer-text {
-    width: 100%; /* Ensure text block takes full width under logo */
+    width: 100%;
   }
 
   .footer-right {
-    width: 100%; /* Take full width */
+    width: 100%;
   }
 
   .footer-right ul {
-    align-items: flex-start; /* Align links to the left when stacked */
+    align-items: flex-start;
   }
 
   .footer-right li a {
-    text-align: left; /* Align link text to the left */
+    text-align: left;
   }
 }
 

@@ -1,156 +1,154 @@
 .two-column-layout .toc {
-    flex: 1; /* Takes up 1/5 of the available space */
-    padding-right: 20px; /* Changed from padding-left to padding-right */
-    padding-left: 20px; /* Removed left padding */
-    border-right: 1px solid #e0e0e0;
-    text-align: left;
-    position: sticky; /* Make the TOC sticky */
-    top: 20px;         /* Stick it to the top */
-    align-self: flex-start;
-    height: fit-content;
-    background-color: #ffffff;
+  flex: 1;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-right: 1px solid #e0e0e0;
+  text-align: left;
+  position: sticky;
+  top: calc(90px + 20px); /* Adjust this: header height + desired gap */
+  /* top: calc(var(--header-height) + 20px); // More advanced with CSS variables */
+  align-self: flex-start;
+  height: fit-content;
+  background-color: #ffffff; /* Ensure TOC has a background when scrolling */
 }
 
 /* ToC title */
 .toc h1 {
-    font-size: 1.1em; /* Adjusted from 1em (1 * 20px = 20px, now 1.25 * 16px = 20px) */
-    font-weight: 600;
+  font-size: 1.1em; /* Adjusted from 1em (1 * 20px = 20px, now 1.25 * 16px = 20px) */
+  font-weight: 600;
 }
 
 .toc ul {
-    list-style-type: none;
-    padding: 8px 0;
+  list-style-type: none;
+  padding: 8px 0;
 }
 
 .toc li a {
-    font-size: 16px; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
-    font-weight: 400;
-    color: #757575;
-    text-decoration: none;
-    display: block;
-    padding: 10px 16px;
-    text-align: left; /* Added left alignment for links */
-    transition: color 0.2s ease, background-color 0.3s ease;
+  font-size: 16px; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
+  font-weight: 400;
+  color: #757575;
+  text-decoration: none;
+  display: block;
+  padding: 10px 16px;
+  text-align: left; /* Added left alignment for links */
+  transition: color 0.2s ease, background-color 0.3s ease;
 }
 
 .toc li a:hover {
-    color: #404040;
-    border-radius: 10px;
-    background: #F7F8FF;
-    scale: 1.01; /* Slightly enlarge the button on hover */
-
+  color: #404040;
+  border-radius: 10px;
+  background: #f7f8ff;
+  scale: 1.01; /* Slightly enlarge the button on hover */
 }
 
-.toc li a.active-toc-link { /* New style for active TOC link */
-    color: #6E6EFF; /* Highlight color for active TOC link */
-    border-radius: 10px;
-    background: #EDF0FF;
-
+.toc li a.active-toc-link {
+  /* New style for active TOC link */
+  color: #6e6eff; /* Highlight color for active TOC link */
+  border-radius: 10px;
+  background: #edf0ff;
 }
 
 /* Specific style for the expandable heading */
 .toc ul li.main-section .toc-main-section-link {
-    font-weight: 600; /* Keep bold as it's a main section */
-    font-size: 16px; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
-    color: #404040; /* Match the color of .toc h1 */
-    display: block; /* Ensure it takes up full width for padding */
-    padding: 10px 16px 0px 16px; /* Match padding of other TOC items */
-    cursor: pointer; /* Change cursor to default to indicate non-clickable */
-    background-color: transparent; /* Ensure no background on hover */
-    transition: color 0.3s ease, background-color 0.3s ease;
-
+  font-weight: 600; /* Keep bold as it's a main section */
+  font-size: 16px; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
+  color: #404040; /* Match the color of .toc h1 */
+  display: block; /* Ensure it takes up full width for padding */
+  padding: 10px 16px 0px 16px; /* Match padding of other TOC items */
+  cursor: pointer; /* Change cursor to default to indicate non-clickable */
+  background-color: transparent; /* Ensure no background on hover */
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .toc ul li.main-section .toc-main-section-link:hover {
-    color: #6E6EFF;
-    border-radius: 10px;
-    background: transparent;
+  color: #6e6eff;
+  border-radius: 10px;
+  background: transparent;
 }
 
 /* Style for the sub-sections container (initially hidden) */
 .sub-toc {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    max-height: 0;     /* Initially hidden */
-    overflow: hidden;  /* Crucial to hide content overflow during height transition */
-    opacity: 0;        /* Start completely transparent for fade-in */
-    visibility: hidden;/* Hide from accessibility tree and prevent clicks when fully hidden */
-    transition: max-height 0.3s ease-out,
-                opacity 0.3s ease-out,
-                visibility 0s linear 0.3s;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0; /* Initially hidden */
+  overflow: hidden; /* Crucial to hide content overflow during height transition */
+  opacity: 0; /* Start completely transparent for fade-in */
+  visibility: hidden; /* Hide from accessibility tree and prevent clicks when fully hidden */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
+    visibility 0s linear 0.3s;
 }
 
 /* When expanded */
 .sub-toc.expanded {
-    max-height: 500px; /* A value large enough to contain all sub-sections */
-    opacity: 1;        /* Fully opaque for fade-in */
-    visibility: visible;/* Make visible */
+  max-height: 500px; /* A value large enough to contain all sub-sections */
+  opacity: 1; /* Fully opaque for fade-in */
+  visibility: visible; /* Make visible */
 
-    /* When expanding, visibility should become visible instantly (0s delay).
+  /* When expanding, visibility should become visible instantly (0s delay).
      * When collapsing, this transition rule won't apply directly; the .sub-toc rule takes over.
      */
-    transition: max-height 0.3s ease-out,
-                opacity 0.3s ease-out,
-                visibility 0s linear 0s; /* Make visible instantly when expanded */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
+    visibility 0s linear 0s; /* Make visible instantly when expanded */
 }
 
 .toc ul li.sub-section a {
-    padding-left: 30px; /* Indentation for sub-sections in sub-page */
+  padding-left: 30px; /* Indentation for sub-sections in sub-page */
 }
 
 /* Back to Top Button */
 #back-to-top {
-    position: fixed;
-    right: 20px; /* Position it 20px from the right edge of the viewport */
-    bottom: 20px; /* Default bottom position, JavaScript will adjust this */
-    width: fit-content;
-    height: auto;
-    padding: 8px 24px;
-    font-size: 1em;
-    font-weight: 600;
-    color: #757575;
-    cursor: pointer;
-    border-radius: 10px;
-    border: 1px solid #E0E0E0;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
-    background-color: #ffffff;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  right: 20px; /* Position it 20px from the right edge of the viewport */
+  bottom: 20px; /* Default bottom position, JavaScript will adjust this */
+  width: fit-content;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 1em;
+  font-weight: 600;
+  color: #757575;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
+  z-index: 1000;
+  background-color: #ffffff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #back-to-top:hover {
-    color: #6E6EFF;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color: #EDF0FF; /* Light background color */
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);}
+  color: #6e6eff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #edf0ff; /* Light background color */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
 
 #back-to-top:active {
-    color: #6E6EFF;
+  color: #6e6eff;
 }
 
 /* Media query for responsive adjustments for ToC */
-    @media (max-width: 768px) {
-        .two-column-layout .toc {
-            /* Ensure TOC is not sticky on small screens */
-            position: relative;
-            top: 0;
-            padding-right: 0; /* Reset padding to avoid extra space on small screens */
-            border-right: none;  /* Remove the border on small screens */
-            padding-left: 20px;
-        }
+@media (max-width: 768px) {
+  .two-column-layout .toc {
+    /* Ensure TOC is not sticky on small screens */
+    position: relative;
+    top: 0;
+    padding-right: 0; /* Reset padding to avoid extra space on small screens */
+    border-right: none; /* Remove the border on small screens */
+    padding-left: 20px;
+  }
 
-        .main-content {
-        flex-direction: column;
-        padding: 24px;
-
-        }
-        .two-column-layout .main-content-column{
-        margin-left: 0;
-        }
-    }
+  .main-content {
+    flex-direction: column;
+    padding: 24px;
+  }
+  .two-column-layout .main-content-column {
+    margin-left: 0;
+  }
+}
