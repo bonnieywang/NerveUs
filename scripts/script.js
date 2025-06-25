@@ -360,13 +360,77 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Tabbed Slideshow Functionality ---
   const tabButtons = document.querySelectorAll(".tab-button");
   const tabContents = document.querySelectorAll(".tab-content");
-  // const tabsContainer = document.querySelector('.tab-section'); // No longer needed for hover control
 
-  let currentTabIndex = 0;
-  // let slideshowInterval; // No longer needed
-  // const slideshowDelay = 5000; // No longer needed
+  // --- Slideshow Logic for each tab ---
+  tabContents.forEach((tabContent) => {
+    const slideshowContainer = tabContent.querySelector(".slideshow-container");
 
-  // Function to show a specific tab
+    // Only proceed if a slideshow container exists within this tab
+    if (slideshowContainer) {
+      let slideIndex = 1; // Current slide for this specific slideshow
+
+      const slides = slideshowContainer.querySelectorAll(".mySlides");
+      const dots = slideshowContainer.querySelectorAll(".dot");
+      const prevButton = slideshowContainer.querySelector(".prev");
+      const nextButton = slideshowContainer.querySelector(".next");
+      const dotContainer = tabContent.querySelector(".dot-container"); // Use tabContent to find its specific dot container
+
+      // Function to display a specific slide for this slideshow
+      function showSlides(n) {
+        // Hide all slides
+        slides.forEach((slide) => (slide.style.display = "none"));
+
+        // Deactivate all dots
+        dots.forEach((dot) => dot.classList.remove("active"));
+
+        // Handle wrap-around logic
+        if (n > slides.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = slides.length;
+        }
+
+        // Display the current slide and activate the corresponding dot
+        if (slides.length > 0) {
+          slides[slideIndex - 1].style.display = "block";
+          if (dots.length > 0) {
+            dots[slideIndex - 1].classList.add("active");
+          }
+        }
+      }
+
+      // Event listeners for prev/next buttons for this specific slideshow
+      if (prevButton) {
+        prevButton.addEventListener("click", () => {
+          slideIndex -= 1;
+          showSlides(slideIndex);
+        });
+      }
+
+      if (nextButton) {
+        nextButton.addEventListener("click", () => {
+          slideIndex += 1;
+          showSlides(slideIndex);
+        });
+      }
+
+      // Event listeners for dots for this specific slideshow
+      if (dotContainer) {
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            slideIndex = index + 1; // Dots are 0-indexed, slides are 1-indexed
+            showSlides(slideIndex);
+          });
+        });
+      }
+
+      // Initialize the first slide for this slideshow
+      showSlides(slideIndex);
+    }
+  });
+
+  // --- Tab Switching Logic ---
   function showTab(index) {
     // Remove 'active' class from all buttons and content
     tabButtons.forEach((button) => button.classList.remove("active"));
@@ -376,39 +440,48 @@ document.addEventListener("DOMContentLoaded", () => {
     tabButtons[index].classList.add("active");
     tabContents[index].classList.add("active");
 
-    currentTabIndex = index;
+    // After switching tabs, ensure the slideshow in the new active tab is correctly displayed
+    const activeTabContent = tabContents[index];
+    const slideshowContainer = activeTabContent.querySelector(
+      ".slideshow-container"
+    );
+    if (slideshowContainer) {
+      // Re-initialize or refresh the active slideshow.
+      // This will set it to its current slideIndex (which is maintained locally)
+      // and ensure the active dot is correct.
+      const slides = slideshowContainer.querySelectorAll(".mySlides");
+      const dots = slideshowContainer.querySelectorAll(".dot");
+
+      // Find the current slide index for this slideshow based on its display style
+      let currentLocalSlideIndex = 1; // Default to 1
+      slides.forEach((slide, idx) => {
+        if (slide.style.display === "block") {
+          currentLocalSlideIndex = idx + 1;
+        }
+      });
+
+      // Manually trigger the showSlides logic for the active tab's slideshow
+      // We don't have direct access to its 'slideIndex' variable from here,
+      // so we need to re-find and display the current one.
+      slides.forEach((slide) => (slide.style.display = "none"));
+      dots.forEach((dot) => dot.classList.remove("active"));
+
+      if (slides.length > 0) {
+        slides[currentLocalSlideIndex - 1].style.display = "block";
+        if (dots.length > 0) {
+          dots[currentLocalSlideIndex - 1].classList.add("active");
+        }
+      }
+    }
   }
-
-  // Function to advance the slideshow (no longer automatically called)
-  // function nextTab() {
-  //     currentTabIndex = (currentTabIndex + 1) % tabButtons.length;
-  //     showTab(currentTabIndex);
-  // }
-
-  // Start the slideshow (no longer automatically called)
-  // function startSlideshow() {
-  //     clearInterval(slideshowInterval);
-  //     slideshowInterval = setInterval(nextTab, slideshowDelay);
-  // }
-
-  // Pause the slideshow (no longer automatically called)
-  // function pauseSlideshow() {
-  //     clearInterval(slideshowInterval);
-  // }
 
   // Add event listeners for tab buttons
   tabButtons.forEach((button, index) => {
     button.addEventListener("click", () => {
       showTab(index);
-      // Removed calls to pauseSlideshow() and startSlideshow() on click
     });
   });
 
-  // Removed pause slideshow on hover over the entire tab section and resume when not hovering
-  // tabsContainer.addEventListener('mouseenter', pauseSlideshow);
-  // tabsContainer.addEventListener('mouseleave', startSlideshow);
-
-  // Initialize the first tab (still necessary)
+  // Initialize the first tab on page load
   showTab(0);
-  // Removed call to startSlideshow() here
 });
