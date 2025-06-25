@@ -216,26 +216,28 @@
 
 /* The dots/bullets/indicators */
 .dot-container {
+  display: flex; /* ADD THIS! */
   justify-content: center;
-  margin: auto;
+  margin: 10px auto; /* Added some vertical margin as well, for spacing */
+  padding: 0; /* Remove default padding if any */
 }
 
 .dot {
   cursor: pointer;
   height: 15px;
   width: 15px;
-  margin: 0 2px;
+  margin: 0 5px; /* Ensure sufficient space between dots */
   background-color: #e0e0e0;
   border-radius: 50%;
-  display: inline-block;
+  display: inline-block; /* Keep this for individual dot properties */
   transition: background-color 0.6s ease;
 }
 
 .dot.active {
-  background-color: #6e6eff; /* Purple for active dot */
+  background-color: #6e6eff; /* THIS IS THE CRITICAL COLOR */
 }
 .dot:hover {
-  background-color: #9c9cff; /* Active dot color, matching arrow */
+  background-color: #9c9cff;
 }
 
 /* Fading animation */

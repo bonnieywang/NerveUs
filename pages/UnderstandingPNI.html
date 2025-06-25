@@ -398,7 +398,7 @@
             <div class="tab-content-container">
               <div id="solution1" class="tab-content active">
                 <div class="tab-inner-media-text-column">
-                  <div class="slideshow-container">
+                  <div class="slideshow-container" id="slideshow1">
                     <div class="mySlides fade">
                       <img
                         src="../images/test_injury_classification_V1.png"
@@ -410,15 +410,28 @@
                       <img src="../images/navlogo.png" style="width: 100%" />
                     </div>
 
-                    <a class="prev" onclick="plusSlides(-1)">&#5176;</a>
-                    <a class="next" onclick="plusSlides(1)">&#5171;</a>
+                    <a
+                      class="prev"
+                      onclick="plusSlides(-1, 'slideshow1', 'dots1')"
+                      >&#5176;</a
+                    >
+                    <a
+                      class="next"
+                      onclick="plusSlides(1, 'slideshow1', 'dots1')"
+                      >&#5171;</a
+                    >
                   </div>
 
-                  <div class="dot-container">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
+                  <div class="dot-container" id="dots1">
+                    <span
+                      class="dot"
+                      onclick="currentSlide(1, 'slideshow1', 'dots1')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(2, 'slideshow1', 'dots1')"
+                    ></span>
                   </div>
-
                   <div class="tab-text">
                     <h4>Neuropraxia - Grade 1 Injury</h4>
                     <p>
@@ -440,7 +453,7 @@
 
               <div id="solution2" class="tab-content">
                 <div class="tab-inner-media-text-column">
-                  <div class="slideshow-container">
+                  <div class="slideshow-container" id="slideshow2">
                     <div class="mySlides fade">
                       <img
                         src="../images/test_injury_classification_V1.png"
@@ -466,15 +479,35 @@
                       />
                     </div>
 
-                    <a class="prev" onclick="plusSlides(-1)">&#5176;</a>
-                    <a class="next" onclick="plusSlides(1)">&#5171;</a>
+                    <a
+                      class="prev"
+                      onclick="plusSlides(-1, 'slideshow2', 'dots2')"
+                      >&#5176;</a
+                    >
+                    <a
+                      class="next"
+                      onclick="plusSlides(1, 'slideshow2', 'dots2')"
+                      >&#5171;</a
+                    >
                   </div>
 
-                  <div class="dot-container">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
+                  <div class="dot-container" id="dots2">
+                    <span
+                      class="dot"
+                      onclick="currentSlide(1, 'slideshow2', 'dots2')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(2, 'slideshow2', 'dots2')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(3, 'slideshow2', 'dots2')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(4, 'slideshow2', 'dots2')"
+                    ></span>
                   </div>
 
                   <div class="tab-text">
@@ -510,7 +543,7 @@
 
               <div id="solution3" class="tab-content">
                 <div class="tab-inner-media-text-column">
-                  <div class="slideshow-container">
+                  <div class="slideshow-container" id="slideshow3">
                     <div class="mySlides fade">
                       <img
                         src="../images/test_injury_classification_V1.png"
@@ -522,13 +555,27 @@
                       <img src="../images/navlogo.png" style="width: 100%" />
                     </div>
 
-                    <a class="prev" onclick="plusSlides(-1)">&#5176;</a>
-                    <a class="next" onclick="plusSlides(1)">&#5171;</a>
+                    <a
+                      class="prev"
+                      onclick="plusSlides(-1, 'slideshow3', 'dots3')"
+                      >&#5176;</a
+                    >
+                    <a
+                      class="next"
+                      onclick="plusSlides(1, 'slideshow3', 'dots3')"
+                      >&#5171;</a
+                    >
                   </div>
 
-                  <div class="dot-container">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
+                  <div class="dot-container" id="dots3">
+                    <span
+                      class="dot"
+                      onclick="currentSlide(1, 'slideshow3', 'dots3')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(2, 'slideshow3', 'dots3')"
+                    ></span>
                   </div>
                   <div class="tab-text">
                     <h4>Neurotmesis - Grade 5 Injury</h4>
