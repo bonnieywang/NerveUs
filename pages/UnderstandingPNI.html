@@ -23,54 +23,53 @@
 
   <body>
     <header>
-      <div class="logo">
-        <a href="../index.html"
-          ><img src="../images/navlogo.png" alt="logo"
-        /></a>
-      </div>
-      <div class="nav-links">
-        <ul class="dropdown-main-menu">
-          <li>
-            <a href="UnderstandingPNI.html">Understanding PNI</a>
-            <ul class="submenu">
-              <!--update #section1 with section ID on page-->
-              <li>
-                <a href="UnderstandingPNI.html#arm-injuries">Arm Injuries</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="AtTheClinic.html">At the Clinic</a>
-            <ul class="submenu">
-              <!--update #section1 with section ID on page-->
-              <li>
-                <a href="AtTheClinic.html#your-care-team">Your Care Team</a>
-              </li>
-              <li>
-                <a href="AtTheClinic.html#diagnostic-testing"
-                  >Diagnostic Testing</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="CareAfterInjury.html">Care After Injury</a>
-            <ul class="submenu">
-              <!--update #section1 with section ID on page-->
-              <li>
-                <a href="CareAfterInjury.html#treatment-options-section"
-                  >Treatment Options</a
-                >
-              </li>
-              <li>
-                <a href="CareAfterInjury.html#rehabilitation-section"
-                  >Rehabilitation</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li><a href="AboutNerveUs.html">About NerveUs</a></li>
-        </ul>
+      <div class="header-inner">
+        <div class="logo">
+          <a href="../index.html"
+            ><img src="../images/navlogo.png" alt="logo"
+          /></a>
+        </div>
+        <div class="nav-links">
+          <ul class="dropdown-main-menu">
+            <li>
+              <a href="UnderstandingPNI.html">Understanding PNI</a>
+              <ul class="submenu">
+                <li>
+                  <a href="UnderstandingPNI.html#arm-injuries">Arm Injuries</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="AtTheClinic.html">At the Clinic</a>
+              <ul class="submenu">
+                <li>
+                  <a href="AtTheClinic.html#your-care-team">Your Care Team</a>
+                </li>
+                <li>
+                  <a href="AtTheClinic.html#diagnostic-testing"
+                    >Diagnostic Testing</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="CareAfterInjury.html">Care After Injury</a>
+              <ul class="submenu">
+                <li>
+                  <a href="CareAfterInjury.html#treatment-options-section"
+                    >Treatment Options</a
+                  >
+                </li>
+                <li>
+                  <a href="CareAfterInjury.html#rehabilitation-section"
+                    >Rehabilitation</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li><a href="AboutNerveUs.html">About NerveUs</a></li>
+          </ul>
+        </div>
       </div>
     </header>
 
@@ -398,10 +397,45 @@
             <div class="tab-content-container">
               <div id="solution1" class="tab-content active">
                 <div class="tab-inner-media-text-column">
-                  <img
-                    src="../images/placeholder169.png"
-                    alt="Neurapraxia Diagram"
-                  />
+                  <div class="slideshow-container" id="slideshow1">
+                    <div class="mySlides fade">
+                      <img
+                        src="../images/injury classification/normalNeuron_V1.png"
+                        style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled."
+                      />
+                    </div>
+
+                    <div class="mySlides fade">
+                      <img
+                        src="../images/injury classification/grade1_V1.png"
+                        style="width: 100%"
+                        alt="Image of neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath is damaged."
+                      />
+                    </div>
+
+                    <a
+                      class="prev"
+                      onclick="plusSlides(-1, 'slideshow1', 'dots1')"
+                      >&#5176;</a
+                    >
+                    <a
+                      class="next"
+                      onclick="plusSlides(1, 'slideshow1', 'dots1')"
+                      >&#5171;</a
+                    >
+                  </div>
+
+                  <div class="dot-container" id="dots1">
+                    <span
+                      class="dot"
+                      onclick="currentSlide(1, 'slideshow1', 'dots1')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(2, 'slideshow1', 'dots1')"
+                    ></span>
+                  </div>
                   <div class="tab-text">
                     <h4>Neuropraxia - Grade 1 Injury</h4>
                     <p>
@@ -423,38 +457,68 @@
 
               <div id="solution2" class="tab-content">
                 <div class="tab-inner-media-text-column">
-                  <img
-                    src="../images/placeholder169.png"
-                    alt="Axonotmesis Diagram"
-                  />
-
-                  <div class="slideshow-container">
+                  <div class="slideshow-container" id="slideshow2">
                     <div class="mySlides fade">
                       <img
-                        src="../images/placeholder169.png"
+                        src="../images/injury classification/normalNeuron_V1.png"
                         style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled."
                       />
                     </div>
 
                     <div class="mySlides fade">
-                      <img src="../images/navlogo.png" style="width: 100%" />
+                      <img
+                        src="../images/injury classification/grade2_V1.png"
+                        style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, and epineurium are damaged."
+                      />
                     </div>
 
                     <div class="mySlides fade">
                       <img
-                        src="../images/placeholder169.png"
+                        src="../images/injury classification/grade3_V1.png"
                         style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, and epineurium are damaged."
                       />
                     </div>
 
-                    <a class="prev" onclick="plusSlides(-1)">&#5176;</a>
-                    <a class="next" onclick="plusSlides(1)">&#5171;</a>
+                    <div class="mySlides fade">
+                      <img
+                        src="../images/injury classification/grade4_V1.png"
+                        style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, epineurium, and perineurium are damaged."
+                      />
+                    </div>
+
+                    <a
+                      class="prev"
+                      onclick="plusSlides(-1, 'slideshow2', 'dots2')"
+                      >&#5176;</a
+                    >
+                    <a
+                      class="next"
+                      onclick="plusSlides(1, 'slideshow2', 'dots2')"
+                      >&#5171;</a
+                    >
                   </div>
 
-                  <div class="dot-container">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
+                  <div class="dot-container" id="dots2">
+                    <span
+                      class="dot"
+                      onclick="currentSlide(1, 'slideshow2', 'dots2')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(2, 'slideshow2', 'dots2')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(3, 'slideshow2', 'dots2')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(4, 'slideshow2', 'dots2')"
+                    ></span>
                   </div>
 
                   <div class="tab-text">
@@ -490,10 +554,45 @@
 
               <div id="solution3" class="tab-content">
                 <div class="tab-inner-media-text-column">
-                  <img
-                    src="../images/placeholder169.png"
-                    alt="Neurotmesis Diagram"
-                  />
+                  <div class="slideshow-container" id="slideshow3">
+                    <div class="mySlides fade">
+                      <img
+                        src="../images/injury classification/normalNeuron_V1.png"
+                        style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled."
+                      />
+                    </div>
+
+                    <div class="mySlides fade">
+                      <img
+                        src="../images/injury classification/grade5_V1.png"
+                        style="width: 100%"
+                        alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, epineurium, perineurium, and endoneurium are damaged."
+                      />
+                    </div>
+
+                    <a
+                      class="prev"
+                      onclick="plusSlides(-1, 'slideshow3', 'dots3')"
+                      >&#5176;</a
+                    >
+                    <a
+                      class="next"
+                      onclick="plusSlides(1, 'slideshow3', 'dots3')"
+                      >&#5171;</a
+                    >
+                  </div>
+
+                  <div class="dot-container" id="dots3">
+                    <span
+                      class="dot"
+                      onclick="currentSlide(1, 'slideshow3', 'dots3')"
+                    ></span>
+                    <span
+                      class="dot"
+                      onclick="currentSlide(2, 'slideshow3', 'dots3')"
+                    ></span>
+                  </div>
                   <div class="tab-text">
                     <h4>Neurotmesis - Grade 5 Injury</h4>
                     <p>
@@ -861,31 +960,37 @@
     </main>
 
     <footer>
-      <div class="footer-left">
-        <a href="../index.html"
-          ><img
-            src="../images/boxlogo.png"
-            alt="NerveUs Logo"
-            class="footer-logo"
-        /></a>
-        <div class="footer-text">
-          <h3><a href="AboutNerveUs.html">About NerveUs</a></h3>
-          <p>
-            Have feedback or suggestions? Let us know by emailing
-            <a href="mailto:bonn.wang@mail.utoronto.ca"
-              >bonn.wang@mail.utoronto.ca</a
-            >
-          </p>
-          <p>&copy; 2025 Bonnie Wang. All rights reserved.</p>
-          <br />
+      <div class="footer-inner">
+        <div class="footer-left">
+          <a href="../index.html"
+            ><img
+              src="../images/boxlogo.png"
+              alt="NerveUs Logo"
+              class="footer-logo"
+          /></a>
+          <div class="footer-text">
+            <h3><a href="./AboutNerveUs.html">About NerveUs</a></h3>
+            <p>
+              Have feedback or suggestions? Let us know by emailing
+              <a href="mailto:bonn.wang@mail.utoronto.ca"
+                >bonn.wang@mail.utoronto.ca</a
+              >
+            </p>
+            <p>&copy; 2025 Bonnie Wang. All rights reserved.</p>
+            <br />
+          </div>
         </div>
-      </div>
-      <div class="footer-right">
-        <ul>
-          <li><a href="UnderstandingPNI.html">Understanding PNI</a></li>
-          <li><a href="AtTheClinic.html">At the Clinic</a></li>
-          <li><a href="CareAfterInjury.html">Care After Injury</a></li>
-        </ul>
+        <div class="footer-right">
+          <ul>
+            <li>
+              <a href="./UnderstandingPNI.html">Understanding PNI</a>
+            </li>
+            <li><a href="./AtTheClinic.html">At the Clinic</a></li>
+            <li>
+              <a href="./CareAfterInjury.html">Care After Injury</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </footer>
 
