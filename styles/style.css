@@ -298,7 +298,7 @@ header .nav-links {
 }
 
 .logo img {
-  height: 56px;
+  height: 48px;
   width: auto; /* Maintain aspect ratio */
   display: block;
 }
