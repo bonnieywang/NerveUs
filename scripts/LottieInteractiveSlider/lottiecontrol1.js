@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // =========================================================
-  // Interactive Slider 1 Logic
+  // Interactive Slider 1 Logic (No changes, for context)
   // =========================================================
   let currentTooltipElements1 = { text: null, rect: null };
 
@@ -14,10 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleBoneOverlayBtn1 = document.getElementById("toggleBoneOverlayBtn");
   const tickmarks1 = document.getElementById("tickmarks");
 
-  const keyPoints1 = [
-    0, 0.1111, 0.2222, 0.3333, 0.4444, 0.5555, 0.6666, 0.7777, 0.8888, 1,
-  ]; // Tick mark positions (normalized)
-  const snapThreshold1 = 0.01; // How close the slider needs to be to snap
+  // The Lottie animation has 180 total frames (0 to 179)
+  const LOTTIE_TOTAL_FRAMES_1 = 180;
+  const LOTTIE_MAX_FRAME_INDEX_1 = LOTTIE_TOTAL_FRAMES_1 - 1; // 179
+
+  // keyPoints1 array generation: 0, 20, 40, ..., 180 (as normalized 0-1 values)
+  const keyPoints1 = [];
+  for (let i = 0; i <= LOTTIE_TOTAL_FRAMES_1; i += 20) {
+    const normalizedValue =
+      i === LOTTIE_TOTAL_FRAMES_1 ? 1 : i / LOTTIE_MAX_FRAME_INDEX_1;
+    keyPoints1.push(normalizedValue);
+  }
+
+  const snapThreshold1 = 0.01;
 
   const animConfig1 = {
     container: animationContainer1,
@@ -27,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid meet",
     },
-    path: "../../pages/layersofnerve.json", // Path to your first animation JSON
+    path: "../../pages/layersofnerve.json",
   };
 
   const animInstance1 = lottie.loadAnimation(animConfig1);
@@ -118,17 +127,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onEnterAnimationFrame1(e) {
-    // e.currentTime is the current frame number.
-    // totalFrames is the total number of frames.
-    // We need to normalize currentFrame to a 0-1 value for the slider.
-    slider1.value = e.currentTime / (animInstance1.totalFrames - 1); // Normalize to 0-1 for slider
+    slider1.value = e.currentTime / LOTTIE_MAX_FRAME_INDEX_1;
   }
 
   function onAnimConfigReady1(e) {
     console.log("Lottie config_ready for slider 1");
-    // Set slider max to 1 (for 0-1 range)
-    slider1.setAttribute("max", 1); // Keep max as 1
-    slider1.setAttribute("step", 0.001); // Add a step for smoother slider movement
+    slider1.setAttribute("max", 1);
+    slider1.setAttribute("step", 0.001);
     slider1.addEventListener("mousedown", onSliderDown1);
   }
 
@@ -259,7 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onSliderChange1(e) {
-    let rawValue = parseFloat(slider1.value); // rawValue will be 0-1
+    let rawValue = parseFloat(slider1.value);
     let snappedValue = rawValue;
 
     for (let i = 0; i < keyPoints1.length; i++) {
@@ -268,20 +273,13 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
       }
     }
-    slider1.value = snappedValue; // Slider value remains 0-1
+    slider1.value = snappedValue;
 
-    const totalAnimationFrames = animInstance1.totalFrames;
-    // Calculate the target frame (e.g., 0 to 260 for a 261-frame animation)
-    const targetFrame = snappedValue * (totalAnimationFrames - 1); // Adjusted for 0-indexed frames for goToAndStop
-    // Lottie usually uses 0-indexed frames, so if it has 261 frames,
-    // they are frames 0 through 260.
-    // Multiplying by totalFrames-1 ensures that a snappedValue of 1
-    // sends it to the last valid frame number.
+    const targetFrame = snappedValue * LOTTIE_MAX_FRAME_INDEX_1;
 
-    // Use Math.round to ensure you're passing an integer frame number
-    animInstance1.goToAndStop(Math.round(targetFrame), true); // THIS IS THE CRUCIAL CHANGE: set `true`
+    animInstance1.goToAndStop(Math.round(targetFrame), true);
 
-    console.log(`Slider snappedValue (0-1): ${snappedValue.toFixed(2)}`);
+    console.log(`Slider snappedValue (0-1): ${snappedValue.toFixed(4)}`);
     console.log(
       `Calculated Lottie Frame (rounded): ${Math.round(targetFrame)}`
     );
@@ -310,25 +308,56 @@ document.addEventListener("DOMContentLoaded", function () {
   animInstance1.addEventListener("config_ready", onAnimConfigReady1);
   animInstance1.addEventListener("DOMLoaded", onAnimDomLoaded1);
 
-  // Tick marks for slider 1
-  const sliderWidth1 = slider1.offsetWidth;
-  const thumbWidth1 = 25; // Assuming your thumb is 25px wide
-  const thumbOffset1 = thumbWidth1 / 2;
+  // --- TICK MARK PLACEMENT LOGIC FOR SLIDER 1 (FIXED FOR RESPONSIVE SMOOTHNESS) ---
+  const thumbWidth1 = 25; // IMPORTANT: This must match the width of your ::-webkit-slider-thumb / ::-moz-range-thumb in CSS
 
-  keyPoints1.forEach((point, index) => {
-    // keyPoints1 are already 0-1 normalized
-    const tick = document.createElement("div");
-    tick.classList.add("tick");
+  let rAF_ID_1 = null; // Variable to hold the requestAnimationFrame ID
 
-    // Calculate position based on the normalized point, adjusting for thumb width
-    let tickPositionPx = point * (sliderWidth1 - thumbWidth1) + thumbOffset1;
+  function drawTickMarks1() {
+    if (!slider1 || !tickmarks1) {
+      console.warn("Slider or tickmarks container not found for slider 1.");
+      return;
+    }
 
-    tick.style.left = `${tickPositionPx}px`;
-    tickmarks1.appendChild(tick);
-  });
+    // Clear existing tick marks to prevent duplicates
+    tickmarks1.innerHTML = "";
+
+    // Get the actual width of the slider input element
+    const sliderTrackWidth1 = slider1.offsetWidth;
+
+    // The effective width that the *center* of the thumb travels
+    const usableTrackWidth1 = sliderTrackWidth1 - thumbWidth1;
+
+    keyPoints1.forEach((point) => {
+      const tick = document.createElement("div");
+      tick.classList.add("tick");
+
+      // Calculate the 'left' position for the CENTER of the tick mark
+      const tickPositionPx = point * usableTrackWidth1 + thumbWidth1 / 2;
+
+      tick.style.left = `${tickPositionPx}px`;
+      tickmarks1.appendChild(tick);
+    });
+
+    rAF_ID_1 = null; // Reset the ID after execution
+  }
+
+  // Function to schedule the tick mark redraw using requestAnimationFrame
+  function scheduleTickMarkDraw1() {
+    if (rAF_ID_1) {
+      cancelAnimationFrame(rAF_ID_1); // Cancel any pending animation frames
+    }
+    rAF_ID_1 = requestAnimationFrame(drawTickMarks1); // Request a new animation frame
+  }
+
+  // Initial drawing of tick marks
+  drawTickMarks1();
+
+  // Listen for resize and schedule the draw for smooth updates
+  window.addEventListener("resize", scheduleTickMarkDraw1);
 
   // =========================================================
-  // Interactive Slider 2 Logic (Duplicated and modified)
+  // Interactive Slider 2 Logic (Updated)
   // =========================================================
   let currentTooltipElements2 = { text: null, rect: null };
 
@@ -346,8 +375,15 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   const tickmarks2 = document.getElementById("tickmarks2");
 
-  const keyPoints2 = [0, 0.5, 1]; // Tick mark positions (normalized)
-  const snapThreshold2 = 0.05; // How close the slider needs to be to snap
+  // Define Lottie total frames and max frame index for slider 2
+  // Assuming totalFrames will be available after 'data_ready'
+  let LOTTIE_TOTAL_FRAMES_2 = 0;
+  let LOTTIE_MAX_FRAME_INDEX_2 = 0;
+
+  // keyPoints2 array generation: similar to slider 1, based on total frames
+  // We'll generate these dynamically once animInstance2.totalFrames is known
+  const keyPoints2 = []; // This will be populated in onAnimDataReady2
+  const snapThreshold2 = 0.01;
 
   const animConfig2 = {
     container: animationContainer2,
@@ -363,13 +399,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const animInstance2 = lottie.loadAnimation(animConfig2);
 
   const svgTooltipsConfig2 = [
-    { id: "tooltipone", text: "This is the first tooltip!" },
+    { id: "tooltipone", text: "This is the first tooltip for Slider 2!" }, // Updated text for clarity
     {
       id: "tooltiptwo",
-      text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-    },
+      text: "This is the second tooltip for Slider 2, providing more detailed information.",
+    }, // Updated text for clarity
   ];
 
+  // Re-using the generic SVG text creation function, or you can have a separate one if needed.
+  // For now, let's keep it separate for clarity in the refactoring.
   function createSvgTextWithBackground2(mainSvgElement, textMessage, centerX) {
     const paddingX = 20;
     const paddingY = 15;
@@ -448,17 +486,41 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onEnterAnimationFrame2(e) {
-    slider2.value = e.currentTime / (animInstance2.totalFrames - 1);
+    // Ensure LOTTIE_MAX_FRAME_INDEX_2 is set before using it
+    if (LOTTIE_MAX_FRAME_INDEX_2 > 0) {
+      slider2.value = e.currentTime / LOTTIE_MAX_FRAME_INDEX_2;
+    }
   }
 
   function onAnimConfigReady2(e) {
     console.log("Lottie config_ready for slider 2");
-    slider2.setAttribute("max", animInstance2.totalFrames - 1);
+    // Set max to 1 for normalized values (0-1)
+    slider2.setAttribute("max", 1);
+    slider2.setAttribute("step", 0.001); // Add step for smoother control
     slider2.addEventListener("mousedown", onSliderDown2);
   }
 
   function onAnimDataReady2(e) {
     console.log("Lottie data_ready for slider 2");
+    // Once animation data is ready, get total frames
+    LOTTIE_TOTAL_FRAMES_2 = animInstance2.totalFrames;
+    LOTTIE_MAX_FRAME_INDEX_2 = LOTTIE_TOTAL_FRAMES_2 - 1;
+
+    // Generate keyPoints dynamically based on the actual animation length
+    // Example: if you want a tick every 10 frames
+    const tickInterval = 20; // Adjust this value as needed for slider 2
+    keyPoints2.length = 0; // Clear existing
+    for (let i = 0; i <= LOTTIE_TOTAL_FRAMES_2; i += tickInterval) {
+      const normalizedValue =
+        i === LOTTIE_TOTAL_FRAMES_2 ? 1 : i / LOTTIE_MAX_FRAME_INDEX_2;
+      keyPoints2.push(normalizedValue);
+    }
+    // Ensure 0 and 1 are always included
+    if (keyPoints2[0] !== 0) keyPoints2.unshift(0);
+    if (keyPoints2[keyPoints2.length - 1] !== 1) keyPoints2.push(1);
+
+    // Draw tick marks once the animation data is ready
+    drawTickMarks2();
   }
 
   function onAnimDomLoaded2(e) {
@@ -594,9 +656,17 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    // Change numerical value here to adjust animation length to slider
     slider2.value = snappedValue;
-    animInstance2.goToAndStop(snappedValue * 30.0, false);
+
+    // Use LOTTIE_MAX_FRAME_INDEX_2 for correct frame calculation
+    const targetFrame = snappedValue * LOTTIE_MAX_FRAME_INDEX_2;
+
+    animInstance2.goToAndStop(Math.round(targetFrame), true); // Use true for `is_smart` if you want to allow backwards animation
+
+    console.log(`Slider 2 snappedValue (0-1): ${snappedValue.toFixed(4)}`);
+    console.log(
+      `Calculated Lottie 2 Frame (rounded): ${Math.round(targetFrame)}`
+    );
   }
 
   // Overlay toggle buttons for slider 2
@@ -622,21 +692,49 @@ document.addEventListener("DOMContentLoaded", function () {
   animInstance2.addEventListener("config_ready", onAnimConfigReady2);
   animInstance2.addEventListener("DOMLoaded", onAnimDomLoaded2);
 
-  // Tick marks for slider 2
-  const sliderWidth2 = slider2.offsetWidth;
-  const thumbWidth2 = 25;
-  const thumbOffset2 = thumbWidth2 / 2;
+  // --- TICK MARK PLACEMENT LOGIC FOR SLIDER 2 (Updated to match Slider 1) ---
+  const thumbWidth2 = 25; // IMPORTANT: This must match the width of your ::-webkit-slider-thumb / ::-moz-range-thumb in CSS
 
-  keyPoints2.forEach((point, index) => {
-    const tick = document.createElement("div");
-    tick.classList.add("tick");
-    let tickPosition = point * sliderWidth2;
-    if (index === 0) {
-      tickPosition = thumbOffset2;
-    } else if (index === keyPoints2.length - 1) {
-      tickPosition = sliderWidth2 - thumbOffset2;
+  let rAF_ID_2 = null; // Variable to hold the requestAnimationFrame ID
+
+  function drawTickMarks2() {
+    if (!slider2 || !tickmarks2) {
+      console.warn("Slider or tickmarks container not found for slider 2.");
+      return;
     }
-    tick.style.left = `${tickPosition}px`;
-    tickmarks2.appendChild(tick);
-  });
+
+    // Clear existing tick marks to prevent duplicates
+    tickmarks2.innerHTML = "";
+
+    // Get the actual width of the slider input element
+    const sliderTrackWidth2 = slider2.offsetWidth;
+
+    // The effective width that the *center* of the thumb travels
+    const usableTrackWidth2 = sliderTrackWidth2 - thumbWidth2;
+
+    keyPoints2.forEach((point) => {
+      const tick = document.createElement("div");
+      tick.classList.add("tick");
+
+      // Calculate the 'left' position for the CENTER of the tick mark
+      const tickPositionPx = point * usableTrackWidth2 + thumbWidth2 / 2;
+
+      tick.style.left = `${tickPositionPx}px`;
+      tickmarks2.appendChild(tick);
+    });
+
+    rAF_ID_2 = null; // Reset the ID after execution
+  }
+
+  // Function to schedule the tick mark redraw using requestAnimationFrame
+  function scheduleTickMarkDraw2() {
+    if (rAF_ID_2) {
+      cancelAnimationFrame(rAF_ID_2); // Cancel any pending animation frames
+    }
+    rAF_ID_2 = requestAnimationFrame(drawTickMarks2); // Request a new animation frame
+  }
+
+  // Initial drawing of tick marks will now happen in onAnimDataReady2
+  // window.addEventListener("resize", scheduleTickMarkDraw2); // Moved to onAnimDataReady2 if you prefer
+  window.addEventListener("resize", scheduleTickMarkDraw2);
 });

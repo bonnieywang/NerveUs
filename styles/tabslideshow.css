@@ -58,7 +58,7 @@
   /* This ensures the element is still in the flow during the fade/slide out,
      then removed after the transition. When showing, it becomes display: block
      immediately to allow the fade/slide in. */
-  transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease;
+  transition: transform 0.3s ease, max-height 0.3s ease;
   /* Add a delay for 'display' property when transitioning *out* */
   display: block; /* Default to block, will be hidden by opacity/max-height for inactive */
 }

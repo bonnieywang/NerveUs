@@ -1,93 +1,117 @@
-/* CSS for the interactive slider (duplicated and adjusted for the second slider) */
 /* Wraps the animation wrapper, slider, and buttons */
 #interactiveSliderBox,
 #interactiveSliderBox2 {
   border: 1.5px solid #e0e0e0; /* Thin gray border */
   border-radius: 10px; /* Rounded corners */
+  padding-bottom: 15px; /* Add some space at the bottom for outside ticks */
 }
 
 /* Wraps the animation, overlay layers, and associated buttons */
 #animationWrapper,
 #animationWrapper2 {
   position: relative;
-  width: auto; /* Adjust to your animation's size */
-  height: auto; /* Set to match your animation height */
+  width: auto;
+  height: auto;
   margin: auto;
   z-index: 2;
-  overflow: hidden; /* Ensures content respects rounded corners */
+  overflow: hidden;
 }
 
 /* Contains the animation only */
 #animationContainer,
 #animationContainer2 {
-  width: 100%; /* Make it 80% of the container width */
+  width: 100%;
   height: auto;
-  margin: 0 auto; /* Center the container */
+  margin: 0 auto;
   box-sizing: border-box;
-  position: relative; /* <-- ADD THIS */
-  z-index: 3; /* <-- MAKE SURE IT'S ABOVE overlay */
+  position: relative;
+  z-index: 3;
 }
 
 /* Container for the slider */
 .sliderContainer {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Center items */
-  gap: 15px; /* Adds spacing between slider and other elements */
-  width: 100%; /* Make container take up full width */
-  padding: 8px 0px; /* Add padding for better spacing */
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 8px 0px;
 }
 
 /* Slider */
 .slider {
   appearance: none;
-  width: 100%; /* Make the slider take up full width */
+  width: 100%;
   height: 12px;
   border-radius: 10px;
-  background: rgba(231, 231, 231);
+  background: #e7e7e7; /* Revert to simple background */
   outline: none;
   transition: opacity 0.2s;
+  /* REMOVE any background-image, background-size properties if present from previous attempts */
 }
 
 /* Slider thumb */
 .slider::-webkit-slider-thumb {
   appearance: none;
-  width: 25px;
+  width: 25px; /* Keep this value consistent with JS thumbWidth1 */
   height: 25px;
   border-radius: 50%;
   background: #6e6eff;
   cursor: pointer;
+  z-index: 2; /* Ensure thumb is above the track */
+  position: relative; /* Needed for z-index on pseudo-elements/track */
 }
 
 .slider::-moz-range-thumb {
-  width: 25px;
+  width: 25px; /* Keep this value consistent with JS thumbWidth1 */
   height: 25px;
   border-radius: 50%;
   background: #000000;
   cursor: pointer;
+  z-index: 2;
+  position: relative;
 }
+
+/* Slider container */
+.slider-wrapper {
+  position: relative; /* CRITICAL: This is the parent for absolutely positioned #tickmarks */
+  width: 90%;
+  margin: 0 auto;
+  /* No padding-bottom here, #tickmarks will position itself outside */
+}
+
+/* Tick marks container */
+#tickmarks,
+#tickmarks2 {
+  position: absolute; /* Positioned relative to .slider-wrapper */
+  width: 100%; /* Span the width of the .slider-wrapper */
+  pointer-events: none; /* Do not block clicks on slider */
+  /* Positioning outside the slider: */
+  top: calc(100% -5px); /* Place 5px below the bottom of the slider element */
+  left: 0; /* Align with the left edge of the slider-wrapper */
+  height: 10px; /* Give it a height to contain the tick marks */
+  /* REMOVE display: flex; justify-content: space-between; here */
+}
+
+/* Individual Tick marks */
+.tick {
+  position: absolute; /* Each tick is positioned absolutely within #tickmarks */
+  top: 0; /* Align to the top of the #tickmarks container */
+  width: 2px; /* Thickness of the tick mark */
+  height: 15px; /* Height of the tick mark */
+  background: #a3a3a3; /* Color of the tick mark */
+  transform: translateX(
+    -50%
+  ); /* CRITICAL: Centers the 2px tick on its calculated 'left' position */
+}
+
+/* ... (rest of your existing CSS) ... */
 
 /* Slider container */
 .slider-wrapper {
   position: relative;
   width: 90%; /* Make the slider 90% of the container width */
   margin: 0 auto; /* Center the slider */
-}
-
-/* Tick marks */
-#tickmarks,
-#tickmarks2 {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  pointer-events: none;
-}
-
-.tick {
-  width: 2px;
-  height: 15px;
-  background: #757575;
 }
 
 /* Media queries for responsiveness on smaller screens */
