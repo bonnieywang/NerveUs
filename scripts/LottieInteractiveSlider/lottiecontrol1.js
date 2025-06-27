@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleBoneOverlayBtn1 = document.getElementById("toggleBoneOverlayBtn");
   const tickmarks1 = document.getElementById("tickmarks");
 
-  const keyPoints1 = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]; // Tick mark positions (normalized)
-  const snapThreshold1 = 0.005; // How close the slider needs to be to snap
+  const keyPoints1 = [
+    0, 0.1111, 0.2222, 0.3333, 0.4444, 0.5555, 0.6666, 0.7777, 0.8888, 1,
+  ]; // Tick mark positions (normalized)
+  const snapThreshold1 = 0.01; // How close the slider needs to be to snap
 
   const animConfig1 = {
     container: animationContainer1,

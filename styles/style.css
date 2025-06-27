@@ -134,7 +134,6 @@ p {
 .media-column {
   flex: 1; /* Allow media column to take available space */
   min-width: 200px; /* Minimum width before wrapping */
-  height: 200px; /* Fixed height for consistency, adjust as needed */
   border-radius: 15px;
   display: flex;
   align-items: center;
