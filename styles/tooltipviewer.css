@@ -1,0 +1,42 @@
+.svg-container {
+  border: 1.5px solid #e0e0e0; /* Thin gray border */
+  border-radius: 10px; /* Rounded corners */
+}
+
+/* Base styles for your SVG anatomical parts */
+#Myelin_Sheath,
+#Axon,
+#Cell_Body,
+#Axon_Terminal,
+#Dendrites {
+  /* Initially, no stroke/outline */
+  stroke: none; /* Make sure no outline appears by default */
+  stroke-miterlimit: 10;
+  /* Important: Make the entire area interactive, even if fill is transparent */
+  pointer-events: all;
+}
+
+#Myelin_Sheath,
+#Axon,
+#Cell_Body,
+#Axon_Terminal,
+#Dendrites {
+  fill: transparent; /* These are meant to be outlines only, so their fill is transparent */
+}
+
+/* NEW: Styles for the dots */
+.anatomy-dot {
+  fill: #b9d8ea; /* Your specified fill color */
+  stroke: #000; /* Thin black border - this is your desired default */
+  stroke-width: 3px;
+  cursor: pointer; /* Indicate it's clickable */
+  /* IMPORTANT CHANGE HERE: Add 'stroke' to the transition */
+}
+
+.anatomy-dot:hover {
+  fill: #b9d8ea; /* Your specified fill color */
+  stroke: #fff; /* Thin black border - this is your desired default */
+  stroke-width: 8px;
+  cursor: pointer; /* Indicate it's clickable */
+  /* IMPORTANT CHANGE HERE: Add 'stroke' to the transition */
+}
