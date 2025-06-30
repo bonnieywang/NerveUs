@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function () {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid meet",
     },
-    path: "../../pages/data2.json", // Path to your second animation JSON
+    path: "../../pages/bp_anatomy.json", // Path to your second animation JSON
   };
 
   const animInstance2 = lottie.loadAnimation(animConfig2);
