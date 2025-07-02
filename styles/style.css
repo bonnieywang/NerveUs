@@ -952,3 +952,98 @@ footer {
     flex: none; /* Remove flex sizing when stacked */
   }
 }
+
+/* Common styles for the icon list */
+.main-content-column ul.icon-list {
+  list-style: none; /* Remove default bullets */
+  padding-left: 20px; /* Indent unordered lists */
+  margin-bottom: 8px; /* Keep existing margin-bottom */
+}
+
+.main-content-column ul.icon-list li {
+  display: flex; /* Make the LI a flex container */
+  align-items: flex-start; /* Align icon and text column to the top */
+  margin-bottom: 20px; /* Space between list items */
+  padding-left: 0; /* Reset padding-left here, we'll control it with the icon's margin */
+}
+
+.main-content-column ul.icon-list li:last-child {
+  margin-bottom: 0; /* No margin after the last list item */
+}
+
+/* Base style for all list item icons */
+.main-content-column ul.icon-list li::before {
+  content: "";
+  display: inline-block; /* Or block, both work here */
+  width: 35px; /* Adjust icon size as needed */
+  height: 35px; /* Adjust icon size as needed */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 25px; /* Space between icon and the text container */
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+  /* Remove position:absolute and left:0; if you had them from previous attempts,
+     as flexbox handles positioning here. */
+}
+
+/* Specific icons for each list item (assuming you're using classes like .icon-bullet-severity) */
+.main-content-column ul.icon-list li.icon-bullet-severity::before {
+  background-image: url("../images/spontaneousRecoveryIcons/increase-up-icon.png");
+}
+.main-content-column ul.icon-list li.icon-bullet-location::before {
+  background-image: url("../images/spontaneousRecoveryIcons/road-route-destination-icon.png");
+}
+.main-content-column ul.icon-list li.icon-bullet-scar-tissue::before {
+  background-image: url("../images/spontaneousRecoveryIcons/lock-icon.png");
+}
+.main-content-column ul.icon-list li.icon-bullet-aging::before {
+  background-image: url("../images/spontaneousRecoveryIcons/clock-line-icon.png");
+}
+
+/* ---- NEW/MODIFIED SECTION FOR TEXT CONTENT ---- */
+/* This is the key part: Wrap your two <p> tags inside a single <div>
+   that is a direct child of the <li>. Then apply flex: 1 to this div. */
+.main-content-column ul.icon-list li > div {
+  /* Targets the direct div child of the li */
+  flex: 1; /* Allows this content div to take up remaining space */
+}
+
+/* Ensure paragraph margins are correct within this content div */
+.main-content-column ul.icon-list li p {
+  margin-bottom: 0; /* Reset default paragraph margin inside this content div */
+}
+
+/* If you want a specific margin *between* the title and description paragraphs,
+   you can target the title paragraph more specifically: */
+.main-content-column ul.icon-list li p.icon-list-title {
+  margin-bottom: 0px; /* Adjust this value as needed for space after the title */
+  /* Keep the negative margin if it's crucial for vertical alignment: */
+  /* margin-top: -2px; */ /* if you want to push it up relative to the icon */
+}
+
+/* This targets the original negative margin on the first P if you didn't add .icon-list-title */
+/* .main-content-column ul.icon-list li p:first-child {
+    margin-bottom: -2px;
+} */
+
+.our-team {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start; /* Pushes text to left, button to right */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 40px; /* Gap between text and button on wrap */
+}
+
+.headshot-image {
+  height: auto;
+  width: 200px;
+  border-radius: 15px;
+}
+
+.headshot-image img {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  border-radius: inherit; /* Ensure the image respects the border-radius */
+  margin-bottom: 20px;
+}
