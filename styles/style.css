@@ -243,11 +243,6 @@ p {
   color: #6e6eff; /* Darker purple on hover */
 }
 
-.inline-header {
-  display: inline;
-  margin-bottom: 2px;
-}
-
 /* navigation box */
 header {
   color: #757575;
@@ -926,6 +921,8 @@ footer {
 
 .callout-box-icon {
   flex: 1;
+  width: 30px;
+  height: 30px;
 }
 
 .callout-box-text {
