@@ -31,7 +31,7 @@ p {
 
 /* More specific paragraph styling for content columns to ensure margin-bottom */
 .main-content-column p {
-  margin-bottom: 8px; /* Ensures this margin is applied within content columns */
+  margin-bottom: 12px; /* Ensures this margin is applied within content columns */
 }
 
 /* Heading styles for main content */
@@ -199,6 +199,40 @@ p {
   }
 }
 /* --- End New Content Two Column Layout --- */
+
+/* --- New Content Two Column Layout (Text same size) --- */
+.two-column-flex-layout {
+  display: flex; /* Makes the direct children flex items */
+  gap: 30px; /* Space between the columns (flex items) */
+  max-width: 900px; /* Example max-width for the entire block */
+  margin: 0 auto; /* Center the block */
+  padding: 20px;
+  align-items: flex-start; /* Aligns items to the top of the container */
+  /* flex-wrap: wrap; Optionally allows columns to wrap onto a new line if screen is too small */
+}
+
+.column-left,
+.column-right {
+  flex: 1; /* Each column takes equal available space */
+  /* You can use specific widths too: flex: 0 0 45%; for fixed width */
+  /* Or make one wider: .column-left { flex: 2; } .column-right { flex: 1; } */
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 768px) {
+  .two-column-flex-layout {
+    flex-direction: column; /* Stack columns vertically on smaller screens */
+    gap: 20px; /* Adjust gap when stacked */
+  }
+
+  .column-left,
+  .column-right {
+    width: 100%; /* Make them take full width when stacked */
+    flex: none; /* Remove flex sizing when stacked */
+  }
+}
+
+/* --- End Two Column Layout (Text same size) --- */
 
 .hyperlink {
   color: #404040; /* Purple color for links */
@@ -532,17 +566,18 @@ footer {
 
 /* Hero Section Specific Styles */
 .hero-section {
-  background-color: #edf0ff; /* Light purple background */
-  padding: 80px 40px; /* Generous padding */
+  background-color: #edf0ff;
   text-align: left; /* Changed to left-aligned */
   border-radius: 20px; /* Rounded corners */
-  margin-bottom: 60px; /* Space below the hero section */
   display: flex;
   flex-direction: row; /* Changed to row for side-by-side content */
   align-items: center; /* Vertically center items */
   justify-content: space-between; /* Space content to left and right */
   position: relative;
   overflow: hidden; /* For the background elements */
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  padding: 40px;
   gap: 40px; /* Space between text and image area */
 }
 
@@ -554,7 +589,6 @@ footer {
 .hero-image-placeholder {
   flex: 1; /* Allows image area to take available space */
   min-height: 200px; /* Minimum height for the placeholder */
-  background-color: #dde0f4; /* Light grey for placeholder */
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -565,8 +599,8 @@ footer {
 }
 
 .hero-section .hero-logo {
-  height: 120px; /* Larger logo */
-  width: auto;
+  height: auto; /* Larger logo */
+  max-width: 100%;
   margin-bottom: 20px;
   display: block; /* Ensure logo is a block element for margin */
 }
@@ -580,10 +614,10 @@ footer {
 }
 
 .hero-section .hero-description {
-  font-size: 1.5em; /* Larger description text */
+  font-size: 1.2em; /* Larger description text */
   font-weight: 400;
   color: #404040;
-  margin-bottom: 40px; /* Bottom margin for spacing */
+  margin-bottom: 20px; /* Bottom margin for spacing */
 }
 
 /* Sections below hero */
@@ -609,7 +643,7 @@ footer {
 
 .modules-section p {
   /* This p will now inherit from the general p rule */
-  margin-bottom: 20px; /* Ensure consistency with general p margin */
+  margin-bottom: 0px; /* Ensure consistency with general p margin */
 }
 
 .modules-grid {
@@ -643,22 +677,17 @@ footer {
   background-color: #ffffff;
 }
 
-.module-card-image-placeholder {
-  width: calc(100% + 60px);
-  margin-left: -30px;
-  margin-top: 0;
-  height: 180px;
-  background-color: #dde0f4;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #757575;
-  font-style: italic;
-  text-align: center;
-  overflow: hidden;
+.module-card-image {
+  width: calc(
+    100% + 60px
+  ); /* This should make it 100% of parent's content + both paddings */
+  margin-top: 20px;
+  height: 180px; /* Fixed height */
+  object-fit: cover; /* Essential for maintaining aspect ratio and cropping */
+  border-radius: 15px;
+  overflow: hidden; /* Good for clipping any overflow from object-fit and radius */
+  display: block; /* Good practice for images */
+  margin-bottom: 20px; /* Ensure this margin is correct for spacing below the image */
 }
 
 .module-card-title {
@@ -713,6 +742,7 @@ footer {
   .modules-section h2,
   .modules-section p {
     text-align: left; /* Ensure text alignment on small screens */
+    margin: 20px;
   }
 }
 
@@ -863,8 +893,65 @@ footer {
   gap: 8px; /* Gap between text and button on wrap */
 }
 
-.tutorial-box p {
+.tutorial-box-icon {
+  flex: 1;
+}
+
+.tutorial-box-text {
+  flex: 15;
+}
+
+.tutorial-box-text p {
   font-size: 0.9em; /* Adjust as needed */
   color: #404040;
-  margin: 0; /* Remove default paragraph margin */
+  margin-bottom: 0; /* Remove default paragraph margin */
+}
+
+.tutorial-box .tutorial-bot-text p {
+  margin-bottom: 0; /* Remove default paragraph margin */
+}
+
+.callout-box {
+  display: flex;
+  align-items: flex;
+  justify-content: flex-start; /* Pushes text to left, button to right */
+  margin: 20px 0px; /* Space above this section */
+  padding: 16px 20px;
+  border: 1.5px solid #e0e0e0; /* Light grey border */
+  border-radius: 10px; /* Rounded corners */
+  background-color: #fffdec; /* Slightly off-white background */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 8px; /* Gap between text and button on wrap */
+}
+
+.callout-box-icon {
+  flex: 1;
+}
+
+.callout-box-text {
+  flex: 12;
+}
+.callout-box-text p {
+  margin: 0;
+}
+
+.column-left,
+.column-right {
+  flex: 1; /* Each column takes equal available space */
+  /* You can use specific widths too: flex: 0 0 45%; for fixed width */
+  /* Or make one wider: .column-left { flex: 2; } .column-right { flex: 1; } */
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 768px) {
+  .two-column-flex-layout {
+    flex-direction: column; /* Stack columns vertically on smaller screens */
+    gap: 20px; /* Adjust gap when stacked */
+  }
+
+  .column-left,
+  .column-right {
+    width: 100%; /* Make them take full width when stacked */
+    flex: none; /* Remove flex sizing when stacked */
+  }
 }
