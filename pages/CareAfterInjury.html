@@ -355,7 +355,11 @@
 
             <div class="media-text-column">
               <div class="media-column">
-                <img src="../images/placeholder11.png" alt="" />
+                <lottie-interactive
+                  path="../animations/primaryNerveRepair.json"
+                  interaction="freeze-click"
+                >
+                </lottie-interactive>
               </div>
               <div class="text-column">
                 <h4>Primary Nerve Repair</h4>
@@ -368,7 +372,11 @@
             </div>
             <div class="media-text-column">
               <div class="media-column">
-                <img src="../images/placeholder11.png" alt="" />
+                <lottie-interactive
+                  path="../animations/nerveGraft.json"
+                  interaction="freeze-click"
+                >
+                </lottie-interactive>
               </div>
               <div class="text-column">
                 <h4>Nerve Graft</h4>
@@ -386,7 +394,11 @@
             </div>
             <div class="media-text-column">
               <div class="media-column">
-                <img src="../images/placeholder11.png" alt="" />
+                <lottie-interactive
+                  path="../animations/nerveTransfer.json"
+                  interaction="freeze-click"
+                >
+                </lottie-interactive>
               </div>
               <div class="text-column">
                 <h4>Nerve Transfer</h4>
@@ -414,42 +426,49 @@
         <section id="after-surgery">
           <h2>After Surgery</h2>
           <div class="subsection">
-            <div class="media-text-column reversed">
-              <div class="media-column">
-                <img src="../images/placeholder11.png" alt="" />
-              </div>
-              <div class="text-column">
-                <h3>Immobilization and Rest</h3>
+            <h3>Immobilization and Rest</h3>
 
-                <p>
-                  After your surgery, the injured area will likely be bandaged
-                  and held in place with a supportive tool like a splint, sling,
-                  or brace. This helps keep the area still and protects the
-                  nerve as it starts to heal.
-                </p>
-                <p>
-                  Be sure to follow up with your surgeon or care team as
-                  scheduled.
-                </p>
-              </div>
-            </div>
+            <p>
+              After your surgery, the injured area will likely be bandaged and
+              held in place with a supportive tool like a splint, sling, or
+              brace. This helps keep the area still and protects the nerve as it
+              starts to heal.
+            </p>
+            <p>
+              Be sure to follow up with your surgeon or care team as scheduled.
+            </p>
           </div>
 
           <div class="subsection">
             <h3>Exercise and Movement</h3>
             <p>
               To prevent muscle loss and stiff joints, your care team might give
-              you some exercises to help improve your range of motion. Doing
-              these regularly can help you:
+              you some exercises to help improve your range of motion. These
+              exercises can be adjusted over time to match your progress.
             </p>
-            <ul>
-              <li>keep your joints flexible,</li>
-              <li>reduce swelling and pain,</li>
-              <li>and rebuild strength over time.</li>
-            </ul>
-            <p>
-              These exercises can be adjusted over time to match your progress.
-            </p>
+
+            <div class="callout-box" style="background-color: #f1f7fb">
+              <div class="callout-box-icon">
+                <img
+                  src="../images/exclamation-warning-round-icon-purple.png"
+                  alt=""
+                  style="width: 35px; height: auto"
+                />
+              </div>
+              <div class="callout-box-text">
+                <p style="margin-bottom: 12px">
+                  <span class="font-semibold"
+                    >Doing these exercises regularly regularly can help
+                    you:</span
+                  >
+                </p>
+                <ul>
+                  <li>keep your joints flexible,</li>
+                  <li>reduce swelling and pain,</li>
+                  <li>and rebuild strength over time.</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="subsection">
             <h3>Monitoring Your Progress</h3>
@@ -505,7 +524,11 @@
             >, your muscles may start receiving signals from a different nerve.
             Because of this change, your brain needs to learn how to use that
             connection again. This process is called
-            <span class="font-semibold"> sensorimotor re-education</span>.
+            <span class="font-semibold"> sensorimotor re-education</span>
+            <span style="color: #757575">
+              (say: sen-suh-ree mow-tr ree-eh-juh-kay-shn)
+            </span>
+            .
           </p>
 
           <div class="media-text-column reversed">
@@ -567,15 +590,15 @@
               />
             </div>
             <div class="callout-box-text">
-              <p>
+              <p style="margin-bottom: 12px">
                 <span class="font-semibold"
                   >Over time, this feedback helps you:</span
                 >
               </p>
               <ul>
-                <li>Learn how to activate the right muscle</li>
-                <li>Strengthen the new nerve-to-muscle connection</li>
-                <li>Retrain your brain to use the new connection</li>
+                <li>Learn how to activate the right muscle.</li>
+                <li>Strengthen the new nerve-to-muscle connection.</li>
+                <li>Retrain your brain to use the new connection.</li>
               </ul>
             </div>
           </div>
@@ -660,6 +683,16 @@
     <script src="../scripts/LottieInteractiveSlider/player2.js"></script>
     <script src="../scripts/LottieInteractiveSlider/lottiecontrol2.js"></script>
     <script src="../scripts/LottieInteractiveSlider/togglebutton.js"></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/lottie-interactive@latest/dist/lottie-interactive.js"
+    ></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js"></script>
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+    <script type="text/javascript" src="../scripts/lottieanimation.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typogr/0.6.7/typogr.min.js"></script>
     <script>
       document.body.innerHTML = typogr.widont(document.body.innerHTML);

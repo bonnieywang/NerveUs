@@ -133,7 +133,7 @@ p {
 
 .media-column {
   flex: 1; /* Allow media column to take available space */
-  min-width: 200px; /* Minimum width before wrapping */
+  min-width: 300px; /* Minimum width before wrapping */
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -150,8 +150,8 @@ p {
   border-radius: 15px; /* Apply the desired border-radius directly */
   overflow: hidden; /* Crucial for clipping the content within the rounded corners */
   display: block; /* Ensures it behaves like a block element for sizing */
-  width: 200px; /* Take full width of its container */
-  height: 200px; /* Take full height of its container */
+  width: 250px; /* Take full width of its container */
+  height: 250px; /* Take full height of its container */
   cursor: pointer;
 }
 
