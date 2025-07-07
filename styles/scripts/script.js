@@ -256,19 +256,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial state of TOC for "Your Care Team" - assume it should be expanded on load
     // This needs to be done *after* the DOM is ready but potentially before the first scroll update
     // Find the "Your Care Team" main section and its sub-toc
-    const yourCareTeamMainLink = document.querySelector(
-      '.toc a[href="#your-care-team"]'
-    );
-    if (yourCareTeamMainLink) {
-      const yourCareTeamSubToc = yourCareTeamMainLink.nextElementSibling;
-      if (
-        yourCareTeamSubToc &&
-        yourCareTeamSubToc.classList.contains("sub-toc")
-      ) {
-        yourCareTeamSubToc.classList.add("expanded");
-        yourCareTeamMainLink.classList.add("active-toc-link"); // Also set it active
-      }
-    }
   };
   setupTocActiveLinks(); // Call this function to set up listeners and initial state
 

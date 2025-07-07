@@ -96,7 +96,6 @@ p {
 .main-content-column ol {
   list-style-type: decimal; /* Use decimal numbers for ordered lists */
   padding-left: 40px; /* Indent unordered lists */
-  padding-right: 100px; /* Indent unordered lists */
   margin-bottom: 8px; /* Space below lists */
 }
 
@@ -162,6 +161,10 @@ p {
   max-height: 100%;
   object-fit: contain; /* Or 'cover' depending on desired crop */
   border-radius: inherit; /* Inherit rounded corners from parent */
+}
+
+.media-column .mri-image {
+  width: 500px;
 }
 
 .text-column {
