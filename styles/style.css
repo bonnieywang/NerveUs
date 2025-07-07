@@ -909,7 +909,18 @@ footer {
   margin-bottom: 0; /* Remove default paragraph margin */
 }
 
+.callout-boxes-container {
+  display: flex; /* Makes the container a flex container */
+  flex-wrap: wrap; /* Allows items to wrap to the next line if space is limited */
+  justify-content: center; /* Centers the boxes horizontally if there's extra space */
+  align-items: flex-start; /* Aligns items to the start of the cross axis (top) */
+  gap: 20px; /* NEW: Adds space directly between flex items (modern way) */
+  padding: 0px 10px; /* Optional: padding around the whole group of boxes */
+  margin: -20px 0 0 0;
+}
+
 .callout-box {
+  flex: 1;
   display: flex;
   align-items: flex;
   justify-content: flex-start; /* Pushes text to left, button to right */
