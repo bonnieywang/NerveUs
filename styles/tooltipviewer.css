@@ -26,17 +26,40 @@
 
 /* NEW: Styles for the dots */
 .anatomy-dot {
-  fill: #b9d8ea; /* Your specified fill color */
+  fill: #c5c5ff; /* Your specified fill color */
   stroke: #000; /* Thin black border - this is your desired default */
   stroke-width: 3px;
   cursor: pointer; /* Indicate it's clickable */
-  /* IMPORTANT CHANGE HERE: Add 'stroke' to the transition */
+
+  /* Animation properties */
+  animation: pulse 1.5s infinite alternate;
+
+  /* FIX FOR SVG PULSING: */
+  transform-box: fill-box; /* Crucial for SVG elements to define the origin box */
+  transform-origin: center center; /* This now correctly refers to the element's visual center */
+
+  /* Add transitions for smooth hover effects if you want them */
+  /* transition: stroke-width 0.3s ease-in-out, stroke 0.3s ease-in-out; */
 }
 
 .anatomy-dot:hover {
-  fill: #b9d8ea; /* Your specified fill color */
+  fill: #6e6eff; /* Your specified fill color */
   stroke: #fff; /* Thin black border - this is your desired default */
   stroke-width: 8px;
   cursor: pointer; /* Indicate it's clickable */
-  /* IMPORTANT CHANGE HERE: Add 'stroke' to the transition */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2); /* Adjust this value for stronger/weaker pulse */
+    opacity: 0.7; /* Adjust for transparency during pulse */
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
