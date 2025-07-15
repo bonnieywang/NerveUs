@@ -1079,11 +1079,17 @@ footer {
 }
 
 @media (max-width: 768px) {
-  h1 {
+  .one-column-layout .main-content-column h1,
+  .two-column-layout .main-content-column h1 {
     line-height: 1.1; /* Adjust this value as needed */
+    font-size: 3em;
+    margin-bottom: 16px;
   }
-  h2 {
+  .one-column-layout .main-content-column h2,
+  .two-column-layout .main-content-column h2 {
     line-height: 1.1; /* Adjust this value as needed */
+    margin-bottom: 16px;
+    font-size: 2em;
   }
   .main-content-column ul {
     padding-right: 0px;
