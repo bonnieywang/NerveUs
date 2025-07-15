@@ -171,7 +171,7 @@
     top: 0;
     padding-right: 0; /* Reset padding to avoid extra space on small screens */
     border-right: none; /* Remove the border on small screens */
-    padding-left: 20px;
+    padding-left: 0;
   }
 
   .main-content {

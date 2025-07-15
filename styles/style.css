@@ -326,6 +326,10 @@ header .nav-links {
     align-items: flex-start;
     width: 100%; /* Ensure menu takes full width on mobile */
   }
+  header {
+    position: relative; /* Overrides the sticky position on mobile */
+    box-shadow: none; /* Optional: Remove the shadow to make it feel less "stuck" */
+  }
 }
 
 .logo img {
