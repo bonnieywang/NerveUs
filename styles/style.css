@@ -1056,8 +1056,9 @@ footer {
 }
 
 .headshot-image img {
-  width: 100%;
-  height: auto; /* Maintain aspect ratio */
+  width: 200px;
+  height: 200px; /* Maintain aspect ratio */
+  object-fit: cover;
   border-radius: inherit; /* Ensure the image respects the border-radius */
   margin-bottom: 20px;
 }

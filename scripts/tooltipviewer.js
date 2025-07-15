@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Axon_Terminal:
       "Axon terminal: The end part of a neuron that sends signals to skin or muscle in the limbs.",
     Myelin_Sheath:
-      "Myelin sheath (mai-uh-luhn sheeth): A layer of fat and protein that wrap around the axons to help electrical signals travel faster.",
+      "Myelin sheath: A layer of fat and protein that wrap around the axons to help electrical signals travel faster.",
   };
 
   // Helper function to handle hover effects for an anatomical part
