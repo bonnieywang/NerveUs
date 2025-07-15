@@ -321,11 +321,7 @@ header .nav-links {
     margin-right: 0;
     width: 100%; /* Ensure nav-links take full width on mobile */
   }
-  .dropdown-main-menu {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%; /* Ensure menu takes full width on mobile */
-  }
+
   header {
     position: relative; /* Overrides the sticky position on mobile */
     box-shadow: none; /* Optional: Remove the shadow to make it feel less "stuck" */
@@ -336,15 +332,6 @@ header .nav-links {
   height: 48px;
   width: auto; /* Maintain aspect ratio */
   display: block;
-}
-
-.dropdown-main-menu {
-  list-style-type: none; /* Remove default bullets */
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff; /* Example background color */
-  display: flex; /* Optional: for horizontal menu */
-  align-items: center; /* Vertically center items, if needed */
 }
 
 .dropdown-main-menu > li {
@@ -420,6 +407,19 @@ header .nav-links {
 .submenu li a:focus {
   /* Added :focus */
   color: #000000;
+}
+
+@media (max-width: 768px) {
+  .dropdown-main-menu {
+    flex-direction: column;
+    align-items: flex-start; /* This is the key line to left-align the list items */
+    width: 100%; /* Ensures the list takes up the full width of its container */
+    margin-top: 16px;
+  }
+
+  .dropdown-main-menu > li > a {
+    padding: 16px 8px;
+  }
 }
 
 /* Footer Styles */
@@ -744,7 +744,6 @@ footer {
   .modules-section h2,
   .modules-section p {
     text-align: left; /* Ensure text alignment on small screens */
-    margin: 20px;
   }
 }
 
@@ -937,6 +936,18 @@ footer {
   gap: 8px; /* Gap between text and button on wrap */
 }
 
+@media (max-width: 768px) {
+  .callout-boxes-container {
+    flex-direction: column; /* Stacks boxes vertically on smaller screens */
+    align-items: center; /* Centers boxes horizontally when stacked */
+    margin: 0 0 16px 0;
+    gap: 0px;
+  }
+  .callout-box {
+    margin: 12px 0;
+  }
+}
+
 .callout-box-icon {
   flex: 1;
   width: 30px;
@@ -1065,4 +1076,16 @@ footer {
   object-fit: cover;
   border-radius: inherit; /* Ensure the image respects the border-radius */
   margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    line-height: 1.1; /* Adjust this value as needed */
+  }
+  h2 {
+    line-height: 1.1; /* Adjust this value as needed */
+  }
+  .main-content-column ul {
+    padding-right: 0px;
+  }
 }
