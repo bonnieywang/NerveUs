@@ -146,7 +146,7 @@ p {
 
 /* Ensure lottie-interactive elements also respect rounded corners */
 .media-column lottie-interactive {
-  border-radius: 15px; /* Apply the desired border-radius directly */
+  border-radius: 10px; /* Apply the desired border-radius directly */
   overflow: hidden; /* Crucial for clipping the content within the rounded corners */
   display: block; /* Ensures it behaves like a block element for sizing */
   width: 250px; /* Take full width of its container */
