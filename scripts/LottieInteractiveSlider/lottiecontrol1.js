@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // =========================================================
-  // Interactive Slider 1 Logic (No changes, for context)
+  // Interactive Slider 1 Logic (Updated for Touch Events)
   // =========================================================
   let currentTooltipElements1 = { text: null, rect: null };
 
@@ -134,7 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Lottie config_ready for slider 1");
     slider1.setAttribute("max", 1);
     slider1.setAttribute("step", 0.001);
+    // Add touchstart listener
     slider1.addEventListener("mousedown", onSliderDown1);
+    slider1.addEventListener("touchstart", onSliderDown1);
   }
 
   function onAnimDataReady1(e) {
@@ -158,7 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (targetSvgElement) {
         console.log(`Found SVG element for tooltip: ${config.id}`);
         targetSvgElement.style.pointerEvents = "auto";
-        targetSvgElement.addEventListener("mouseenter", () => {
+        // Combine mouseenter/mouseleave with touchstart/touchend for tooltips
+        const handleTooltipShow = () => {
           if (
             currentTooltipElements1.text &&
             currentTooltipElements1.text.parentNode
@@ -217,9 +220,9 @@ document.addEventListener("DOMContentLoaded", function () {
               currentTooltipElements1.rect.style.visibility = "visible";
             }
           }, 10);
-        });
+        };
 
-        targetSvgElement.addEventListener("mouseleave", () => {
+        const handleTooltipHide = () => {
           if (currentTooltipElements1.text && currentTooltipElements1.rect) {
             const textToFade = currentTooltipElements1.text;
             const rectToFade = currentTooltipElements1.rect;
@@ -241,7 +244,14 @@ document.addEventListener("DOMContentLoaded", function () {
               textToFade.removeEventListener("transitionend", handler);
             });
           }
-        });
+        };
+
+        targetSvgElement.addEventListener("mouseenter", handleTooltipShow);
+        targetSvgElement.addEventListener("mouseleave", handleTooltipHide);
+        // For touch devices, a single tap (touchstart) can trigger show and a subsequent tap/swipe can dismiss.
+        // This is a simplified approach. For more robust touch tooltips, you might need a different UX.
+        targetSvgElement.addEventListener("touchstart", handleTooltipShow);
+        targetSvgElement.addEventListener("touchend", handleTooltipHide); // Dismiss on touchend
       } else {
         console.warn(
           `SVG element with ID '${config.id}' not found. Tooltip will not appear for this element.`
@@ -254,13 +264,17 @@ document.addEventListener("DOMContentLoaded", function () {
     animInstance1.pause();
     animInstance1.removeEventListener("enterFrame", onEnterAnimationFrame1);
     slider1.addEventListener("input", onSliderChange1);
+    // Add touchend listener
     window.addEventListener("mouseup", onSliderUp1);
+    window.addEventListener("touchend", onSliderUp1);
   }
 
   function onSliderUp1(e) {
     animInstance1.addEventListener("enterFrame", onEnterAnimationFrame1);
     slider1.removeEventListener("input", onSliderChange1);
+    // Remove touchend listener
     window.removeEventListener("mouseup", onSliderUp1);
+    window.removeEventListener("touchend", onSliderUp1);
   }
 
   function onSliderChange1(e) {
@@ -357,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", scheduleTickMarkDraw1);
 
   // =========================================================
-  // Interactive Slider 2 Logic (Updated)
+  // Interactive Slider 2 Logic (Updated for Touch Events)
   // =========================================================
   let currentTooltipElements2 = { text: null, rect: null };
 
@@ -497,7 +511,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set max to 1 for normalized values (0-1)
     slider2.setAttribute("max", 1);
     slider2.setAttribute("step", 0.001); // Add step for smoother control
+    // Add touchstart listener
     slider2.addEventListener("mousedown", onSliderDown2);
+    slider2.addEventListener("touchstart", onSliderDown2);
   }
 
   function onAnimDataReady2(e) {
@@ -540,7 +556,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (targetSvgElement) {
         console.log(`Found SVG element for tooltip: ${config.id}`);
         targetSvgElement.style.pointerEvents = "auto";
-        targetSvgElement.addEventListener("mouseenter", () => {
+        // Combine mouseenter/mouseleave with touchstart/touchend for tooltips
+        const handleTooltipShow = () => {
           if (
             currentTooltipElements2.text &&
             currentTooltipElements2.text.parentNode
@@ -599,9 +616,9 @@ document.addEventListener("DOMContentLoaded", function () {
               currentTooltipElements2.rect.style.visibility = "visible";
             }
           }, 10);
-        });
+        };
 
-        targetSvgElement.addEventListener("mouseleave", () => {
+        const handleTooltipHide = () => {
           if (currentTooltipElements2.text && currentTooltipElements2.rect) {
             const textToFade = currentTooltipElements2.text;
             const rectToFade = currentTooltipElements2.rect;
@@ -623,7 +640,12 @@ document.addEventListener("DOMContentLoaded", function () {
               textToFade.removeEventListener("transitionend", handler);
             });
           }
-        });
+        };
+
+        targetSvgElement.addEventListener("mouseenter", handleTooltipShow);
+        targetSvgElement.addEventListener("mouseleave", handleTooltipHide);
+        targetSvgElement.addEventListener("touchstart", handleTooltipShow);
+        targetSvgElement.addEventListener("touchend", handleTooltipHide);
       } else {
         console.warn(
           `SVG element with ID '${config.id}' not found. Tooltip will not appear for this element.`
@@ -636,13 +658,17 @@ document.addEventListener("DOMContentLoaded", function () {
     animInstance2.pause();
     animInstance2.removeEventListener("enterFrame", onEnterAnimationFrame2);
     slider2.addEventListener("input", onSliderChange2);
+    // Add touchend listener
     window.addEventListener("mouseup", onSliderUp2);
+    window.addEventListener("touchend", onSliderUp2);
   }
 
   function onSliderUp2(e) {
     animInstance2.addEventListener("enterFrame", onEnterAnimationFrame2);
     slider2.removeEventListener("input", onSliderChange2);
+    // Remove touchend listener
     window.removeEventListener("mouseup", onSliderUp2);
+    window.removeEventListener("touchend", onSliderUp2);
   }
 
   function onSliderChange2(e) {
