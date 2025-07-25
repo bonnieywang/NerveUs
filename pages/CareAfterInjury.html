@@ -365,11 +365,38 @@
 
             <div class="media-text-column">
               <div class="media-column">
-                <lottie-interactive
-                  path="../animations/primaryNerveRepair.json"
-                  interaction="freeze-click"
-                >
-                </lottie-interactive>
+                <div class="video-container">
+                  <video class="animation-video" width="250" height="250">
+                    <source
+                      src="../animations/primaryNerveRepair.mp4"
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="custom-video-controls-overlay">
+                    <button class="play-pause-button play-button">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="32px"
+                        height="32px"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                      <svg
+                        class="hidden"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="32px"
+                        height="32px"
+                      >
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div class="text-column">
                 <h4>Primary Nerve Repair</h4>
@@ -380,13 +407,41 @@
                 </p>
               </div>
             </div>
+
             <div class="media-text-column">
               <div class="media-column">
-                <lottie-interactive
-                  path="../animations/nerveGraft.json"
-                  interaction="freeze-click"
-                >
-                </lottie-interactive>
+                <div class="video-container">
+                  <video class="animation-video" width="250" height="250">
+                    <source
+                      src="../animations/nerveGraft.mp4"
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="custom-video-controls-overlay">
+                    <button class="play-pause-button play-button">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="32px"
+                        height="32px"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                      <svg
+                        class="hidden"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="32px"
+                        height="32px"
+                      >
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div class="text-column">
                 <h4>Nerve Graft</h4>
@@ -397,13 +452,41 @@
                 </p>
               </div>
             </div>
+
             <div class="media-text-column">
               <div class="media-column">
-                <lottie-interactive
-                  path="../animations/nerveTransfer.json"
-                  interaction="freeze-click"
-                >
-                </lottie-interactive>
+                <div class="video-container">
+                  <video class="animation-video" width="250" height="250">
+                    <source
+                      src="../animations/nerveGraft.mp4"
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="custom-video-controls-overlay">
+                    <button class="play-pause-button play-button">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="32px"
+                        height="32px"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                      <svg
+                        class="hidden"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="32px"
+                        height="32px"
+                      >
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div class="text-column">
                 <h4>Nerve Transfer</h4>
@@ -419,6 +502,7 @@
                 </p>
               </div>
             </div>
+
             <div class="callout-box" style="background-color: #f1f7fb">
               <div class="callout-box-icon">
                 <img
@@ -733,6 +817,106 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typogr/0.6.7/typogr.min.js"></script>
     <script>
       document.body.innerHTML = typogr.widont(document.body.innerHTML);
+    </script>
+    <script>
+      // Get all video containers
+      const videoContainers = document.querySelectorAll(".video-container");
+
+      videoContainers.forEach((container) => {
+        const video = container.querySelector(".animation-video");
+        const playPauseButton = container.querySelector(".play-pause-button");
+        const playIcon = playPauseButton.querySelector("svg:first-child");
+        const pauseIcon = playPauseButton.querySelector("svg:last-child");
+        const controlsOverlay = container.querySelector(
+          ".custom-video-controls-overlay"
+        ); // Get the overlay element
+
+        // Function to show/hide icons for this specific video instance
+        function showPlayIcon() {
+          playIcon.classList.remove("hidden");
+          pauseIcon.classList.add("hidden");
+        }
+
+        function showPauseIcon() {
+          playIcon.classList.add("hidden");
+          pauseIcon.classList.remove("hidden");
+        }
+
+        // Function to show controls overlay
+        function showControls() {
+          controlsOverlay.classList.remove("hide-controls-on-play");
+        }
+
+        // Function to hide controls overlay (only if video is playing)
+        function hideControls() {
+          if (!video.paused) {
+            // Only hide if the video is currently playing
+            controlsOverlay.classList.add("hide-controls-on-play");
+          }
+        }
+
+        // Initial state: show play icon and controls overlay (since video is paused on load)
+        showPlayIcon();
+        showControls(); // Ensure controls are visible when page loads/video is paused
+
+        // Event listener for play/pause button
+        playPauseButton.addEventListener("click", () => {
+          if (video.paused || video.ended) {
+            // Pause all other videos before playing this one
+            document
+              .querySelectorAll(".animation-video")
+              .forEach((otherVideo) => {
+                if (otherVideo !== video && !otherVideo.paused) {
+                  otherVideo.pause();
+                  // Find and update the button for the other video if it exists
+                  const otherContainer = otherVideo.closest(".video-container");
+                  if (otherContainer) {
+                    const otherButton =
+                      otherContainer.querySelector(".play-pause-button");
+                    const otherPlayIcon =
+                      otherButton.querySelector("svg:first-child");
+                    const otherPauseIcon =
+                      otherButton.querySelector("svg:last-child");
+                    otherPlayIcon.classList.remove("hidden");
+                    otherPauseIcon.classList.add("hidden");
+                    // Ensure controls for other paused videos are visible
+                    otherContainer
+                      .querySelector(".custom-video-controls-overlay")
+                      .classList.remove("hide-controls-on-play");
+                  }
+                }
+              });
+
+            video.play();
+            showPauseIcon(); // Show pause icon when playing
+            hideControls(); // Immediately hide controls when video starts playing
+          } else {
+            video.pause();
+            showPlayIcon(); // Show play icon when paused
+            showControls(); // Immediately show controls when video pauses
+          }
+        });
+
+        // --- New: Hover events for the video container ---
+        container.addEventListener("mouseover", showControls); // Show controls on hover
+        container.addEventListener("mouseleave", hideControls); // Hide controls on mouse leave (if playing)
+
+        // Update icons and control visibility based on video's own events
+        video.addEventListener("pause", () => {
+          showPlayIcon();
+          showControls(); // Always show controls when video pauses
+        });
+        video.addEventListener("play", () => {
+          showPauseIcon();
+          // Delay hiding slightly to allow cursor to move away from button after clicking
+          // Or you can remove this if you want it to hide instantly
+          setTimeout(hideControls, 300); // Hide controls when video plays
+        });
+        video.addEventListener("ended", () => {
+          showPlayIcon();
+          showControls(); // Show controls when video ends for replay
+        });
+      });
     </script>
   </body>
 </html>

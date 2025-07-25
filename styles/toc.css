@@ -24,7 +24,7 @@
 }
 
 .toc li a {
-  font-size: 16px; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
+  font-size: 0.9em; /* Adjusted from 0.8em (0.8 * 20px = 16px, now 1 * 16px = 16px) */
   font-weight: 400;
   color: #757575;
   text-decoration: none;
@@ -65,7 +65,7 @@
 .toc ul li.main-section .toc-main-section-link:hover {
   color: #404040;
   border-radius: 10px;
-  background: #f7f8ff;
+  /* background: #f7f8ff; */
 }
 
 /* Arrow icon for expandable sections */

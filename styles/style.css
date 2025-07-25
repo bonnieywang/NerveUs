@@ -1095,3 +1095,82 @@ footer {
     padding-right: 0px;
   }
 }
+
+.video-container {
+  position: relative; /* Essential for positioning the overlay button relative to the video */
+  width: 250px; /* Match video width */
+  height: 250px; /* Match video height */
+  display: flex; /* Helps center the video itself if it doesn't perfectly fill the container */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensures nothing spills out of the container */
+}
+
+/* Ensure the video itself respects its container */
+.video-container video {
+  display: block; /* Remove any extra space below the video */
+  width: 100%; /* Make video fill its container */
+  height: 100%; /* Make video fill its container */
+  object-fit: cover; /* Ensures the video covers the area without distortion */
+  border-radius: 10px;
+}
+
+.custom-video-controls-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Allows clicks to pass through initially, then re-enabled for button */
+  transition: opacity 0.3s ease-in-out; /* Smooth transition for hiding/showing */
+}
+
+.custom-video-controls-overlay button {
+  pointer-events: auto; /* Re-enable pointer events for the button */
+  background: #f7f8ffac; /* Semi-transparent black background */
+  border: none;
+  border-radius: 50%; /* Makes it circular */
+  color: #6e6eff; /* Icon color */
+  cursor: pointer;
+  width: 60px; /* Size of the circular button */
+  height: 60px; /* Size of the circular button */
+  display: flex; /* Use flexbox for icon centering within the button */
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease; /* Smooth hover effect */
+}
+
+.custom-video-controls-overlay button:hover {
+  background: #f7f8ff; /* Darker on hover */
+}
+
+/* Icon styling */
+.custom-video-controls-overlay button svg {
+  fill: currentColor; /* Inherit color from parent (button) */
+  width: 32px; /* Set specific width for the SVG */
+  height: 32px; /* Set specific height for the SVG */
+}
+
+/* Utility class to hide icons */
+.hidden {
+  display: none;
+}
+
+/* Add this new CSS rule */
+.custom-video-controls-overlay.hide-controls-on-play {
+  opacity: 0;
+  pointer-events: none; /* Make the whole overlay unclickable when hidden */
+}
+
+/* Ensure the button itself can still be interacted with when shown */
+.custom-video-controls-overlay.hide-controls-on-play button {
+  pointer-events: none; /* Make the button itself unclickable when hidden */
+}
+
+/* When not hidden, make sure button is clickable again */
+.custom-video-controls-overlay:not(.hide-controls-on-play) button {
+  pointer-events: auto;
+}
