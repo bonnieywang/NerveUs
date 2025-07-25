@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   // =========================================================
-  // Interactive Slider 1 Logic (Updated for Touch Events)
+  // Interactive Slider 1 Logic (Cleaned - No Tooltips/Overlays)
   // =========================================================
-  let currentTooltipElements1 = { text: null, rect: null };
+  // REMOVED: currentTooltipElements1 = { text: null, rect: null };
 
   // Get DOM input objects for slider 1
   const slider1 = document.getElementById("slider");
   const animationContainer1 = document.getElementById("animationContainer");
-  const skinOverlay1 = document.getElementById("skinOverlay");
-  const boneBehind1 = document.getElementById("boneBehind");
-  const boneFront1 = document.getElementById("boneFront");
-  const toggleSkinOverlayBtn1 = document.getElementById("toggleSkinOverlayBtn");
-  const toggleBoneOverlayBtn1 = document.getElementById("toggleBoneOverlayBtn");
+  // REMOVED: const skinOverlay1 = document.getElementById("skinOverlay");
+  // REMOVED: const boneBehind1 = document.getElementById("boneBehind");
+  // REMOVED: const boneFront1 = document.getElementById("boneFront");
+  // REMOVED: const toggleSkinOverlayBtn1 = document.getElementById("toggleSkinOverlayBtn");
+  // REMOVED: const toggleBoneOverlayBtn1 = document.getElementById("toggleBoneOverlayBtn");
   const tickmarks1 = document.getElementById("tickmarks");
 
   // The Lottie animation has 180 total frames (0 to 179)
@@ -41,90 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const animInstance1 = lottie.loadAnimation(animConfig1);
 
-  const svgTooltipsConfig1 = [
-    { id: "tooltipone", text: "This is the first tooltip!" },
-    {
-      id: "tooltiptwo",
-      text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-    },
-  ];
-
-  function createSvgTextWithBackground1(mainSvgElement, textMessage, centerX) {
-    const paddingX = 20;
-    const paddingY = 15;
-    const lineHeight = 50;
-    const maxWidth = 500;
-
-    const textElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "text"
-    );
-    textElement.classList.add("svg-text-tooltip");
-    textElement.setAttribute("text-anchor", "middle");
-    textElement.setAttribute("x", centerX);
-    mainSvgElement.appendChild(textElement);
-
-    const words = textMessage.split(" ");
-    let currentLine = "";
-    let tspanElements = [];
-
-    for (let i = 0; i < words.length; i++) {
-      const testLine =
-        currentLine === "" ? words[i] : currentLine + " " + words[i];
-      textElement.textContent = testLine;
-      if (
-        textElement.getComputedTextLength() > maxWidth &&
-        currentLine !== ""
-      ) {
-        const tspan = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "tspan"
-        );
-        tspan.textContent = currentLine;
-        tspan.setAttribute("x", centerX);
-        tspan.setAttribute("dy", lineHeight);
-        tspanElements.push(tspan);
-        currentLine = words[i];
-      } else {
-        currentLine = testLine;
-      }
-    }
-    if (currentLine !== "") {
-      const tspan = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "tspan"
-      );
-      tspan.textContent = currentLine;
-      tspan.setAttribute("x", centerX);
-      tspan.setAttribute("dy", tspanElements.length === 0 ? 0 : lineHeight);
-      tspanElements.push(tspan);
-    }
-
-    textElement.textContent = "";
-    tspanElements.forEach((tspan) => textElement.appendChild(tspan));
-    const textBBox = textElement.getBBox();
-
-    const rectElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "rect"
-    );
-    rectElement.classList.add("svg-tooltip-background");
-    const rectX = textBBox.x - paddingX;
-    const rectY = textBBox.y - paddingY;
-    const rectWidth = textBBox.width + 2 * paddingX;
-    const rectHeight = textBBox.height + 2 * paddingY;
-    rectElement.setAttribute("x", rectX);
-    rectElement.setAttribute("y", rectY);
-    rectElement.setAttribute("width", rectWidth);
-    rectElement.setAttribute("height", rectHeight);
-
-    rectElement.style.opacity = "0";
-    rectElement.style.visibility = "hidden";
-    textElement.style.opacity = "0";
-    textElement.style.visibility = "hidden";
-    mainSvgElement.insertBefore(rectElement, textElement);
-    return { text: textElement, rect: rectElement };
-  }
+  // REMOVED: svgTooltipsConfig1 array and related functions (createSvgTextWithBackground1)
 
   function onEnterAnimationFrame1(e) {
     slider1.value = e.currentTime / LOTTIE_MAX_FRAME_INDEX_1;
@@ -144,120 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onAnimDomLoaded1(e) {
-    console.log(
-      "Lottie elements for slider 1 have been added to the DOM. Attaching SVG tooltip listeners."
-    );
+    console.log("Lottie elements for slider 1 have been added to the DOM.");
+    // REMOVED: All tooltip attachment logic from here
     const mainSvgElement = animationContainer1.querySelector("svg");
-    if (!mainSvgElement) {
-      console.warn(
-        "Main SVG element not found in animationContainer1. Cannot attach SVG tooltips."
-      );
-      return;
+    if (mainSvgElement) {
+      // Ensure mainSvgElement exists before trying to set pointerEvents
+      mainSvgElement.style.pointerEvents = "auto";
     }
-    mainSvgElement.style.pointerEvents = "auto";
-    svgTooltipsConfig1.forEach((config) => {
-      const targetSvgElement = document.getElementById(config.id);
-      if (targetSvgElement) {
-        console.log(`Found SVG element for tooltip: ${config.id}`);
-        targetSvgElement.style.pointerEvents = "auto";
-        // Combine mouseenter/mouseleave with touchstart/touchend for tooltips
-        const handleTooltipShow = () => {
-          if (
-            currentTooltipElements1.text &&
-            currentTooltipElements1.text.parentNode
-          ) {
-            currentTooltipElements1.text.parentNode.removeChild(
-              currentTooltipElements1.text
-            );
-            if (
-              currentTooltipElements1.rect &&
-              currentTooltipElements1.rect.parentNode
-            ) {
-              currentTooltipElements1.rect.parentNode.removeChild(
-                currentTooltipElements1.rect
-              );
-            }
-            currentTooltipElements1 = { text: null, rect: null };
-          }
-          const bbox = targetSvgElement.getBBox();
-          const ctm = targetSvgElement.getScreenCTM();
-          const svgPoint = mainSvgElement.createSVGPoint();
-          svgPoint.x = bbox.x + bbox.width / 2;
-          svgPoint.y = bbox.y;
-          const screenPoint = svgPoint.matrixTransform(ctm);
-          const inverseMainSvgCtm = mainSvgElement.getScreenCTM().inverse();
-          const svgGlobalPoint = screenPoint.matrixTransform(inverseMainSvgCtm);
-
-          currentTooltipElements1 = createSvgTextWithBackground1(
-            mainSvgElement,
-            config.text,
-            svgGlobalPoint.x
-          );
-          const paddingY = 15;
-          const clearanceFromElement = 20;
-          const rectBBoxAfterCreation = currentTooltipElements1.rect.getBBox();
-          const tooltipHeight = rectBBoxAfterCreation.height;
-          const finalRectY =
-            svgGlobalPoint.y - tooltipHeight - clearanceFromElement;
-          const translateY = finalRectY - rectBBoxAfterCreation.y;
-
-          currentTooltipElements1.rect.setAttribute(
-            "transform",
-            `translate(0, ${translateY})`
-          );
-          currentTooltipElements1.text.setAttribute(
-            "transform",
-            `translate(0, ${translateY})`
-          );
-
-          setTimeout(() => {
-            if (currentTooltipElements1.text) {
-              currentTooltipElements1.text.style.opacity = "1";
-              currentTooltipElements1.text.style.visibility = "visible";
-            }
-            if (currentTooltipElements1.rect) {
-              currentTooltipElements1.rect.style.opacity = "1";
-              currentTooltipElements1.rect.style.visibility = "visible";
-            }
-          }, 10);
-        };
-
-        const handleTooltipHide = () => {
-          if (currentTooltipElements1.text && currentTooltipElements1.rect) {
-            const textToFade = currentTooltipElements1.text;
-            const rectToFade = currentTooltipElements1.rect;
-
-            textToFade.style.opacity = "0";
-            textToFade.style.visibility = "hidden";
-            rectToFade.style.opacity = "0";
-            rectToFade.style.visibility = "hidden";
-
-            currentTooltipElements1 = { text: null, rect: null };
-
-            textToFade.addEventListener("transitionend", function handler() {
-              if (textToFade.parentNode) {
-                textToFade.parentNode.removeChild(textToFade);
-              }
-              if (rectToFade.parentNode) {
-                rectToFade.parentNode.removeChild(rectToFade);
-              }
-              textToFade.removeEventListener("transitionend", handler);
-            });
-          }
-        };
-
-        targetSvgElement.addEventListener("mouseenter", handleTooltipShow);
-        targetSvgElement.addEventListener("mouseleave", handleTooltipHide);
-        // For touch devices, a single tap (touchstart) can trigger show and a subsequent tap/swipe can dismiss.
-        // This is a simplified approach. For more robust touch tooltips, you might need a different UX.
-        targetSvgElement.addEventListener("touchstart", handleTooltipShow);
-        targetSvgElement.addEventListener("touchend", handleTooltipHide); // Dismiss on touchend
-      } else {
-        console.warn(
-          `SVG element with ID '${config.id}' not found. Tooltip will not appear for this element.`
-        );
-      }
-    });
   }
 
   function onSliderDown1(e) {
@@ -299,23 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  // Overlay toggle buttons for slider 1
-  if (toggleSkinOverlayBtn1) {
-    toggleSkinOverlayBtn1.addEventListener("click", function () {
-      this.classList.toggle("active");
-      skinOverlay1.style.display =
-        skinOverlay1.style.display === "block" ? "none" : "block";
-    });
-  }
-  if (toggleBoneOverlayBtn1) {
-    toggleBoneOverlayBtn1.addEventListener("click", function () {
-      this.classList.toggle("active");
-      boneBehind1.style.display =
-        boneBehind1.style.display === "block" ? "none" : "block";
-      boneFront1.style.display =
-        boneFront1.style.display === "block" ? "none" : "block";
-    });
-  }
+  // REMOVED: Overlay toggle buttons for slider 1
 
   animInstance1.addEventListener("enterFrame", onEnterAnimationFrame1);
   animInstance1.addEventListener("data_ready", onAnimDataReady1);
@@ -371,22 +165,18 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", scheduleTickMarkDraw1);
 
   // =========================================================
-  // Interactive Slider 2 Logic (Updated for Touch Events)
+  // Interactive Slider 2 Logic (Cleaned - No Tooltips/Overlays)
   // =========================================================
-  let currentTooltipElements2 = { text: null, rect: null };
+  // REMOVED: let currentTooltipElements2 = { text: null, rect: null };
 
   // Get DOM input objects for slider 2
   const slider2 = document.getElementById("slider2");
   const animationContainer2 = document.getElementById("animationContainer2");
-  const skinOverlay2 = document.getElementById("skinOverlay2");
-  const boneBehind2 = document.getElementById("boneBehind2");
-  const boneFront2 = document.getElementById("boneFront2");
-  const toggleSkinOverlayBtn2 = document.getElementById(
-    "toggleSkinOverlayBtn2"
-  );
-  const toggleBoneOverlayBtn2 = document.getElementById(
-    "toggleBoneOverlayBtn2"
-  );
+  // REMOVED: const skinOverlay2 = document.getElementById("skinOverlay2");
+  // REMOVED: const boneBehind2 = document.getElementById("boneBehind2");
+  // REMOVED: const boneFront2 = document.getElementById("boneFront2");
+  // REMOVED: const toggleSkinOverlayBtn2 = document.getElementById("toggleSkinOverlayBtn2");
+  // REMOVED: const toggleBoneOverlayBtn2 = document.getElementById("toggleBoneOverlayBtn2");
   const tickmarks2 = document.getElementById("tickmarks2");
 
   // Define Lottie total frames and max frame index for slider 2
@@ -412,92 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const animInstance2 = lottie.loadAnimation(animConfig2);
 
-  const svgTooltipsConfig2 = [
-    { id: "tooltipone", text: "This is the first tooltip for Slider 2!" }, // Updated text for clarity
-    {
-      id: "tooltiptwo",
-      text: "This is the second tooltip for Slider 2, providing more detailed information.",
-    }, // Updated text for clarity
-  ];
-
-  // Re-using the generic SVG text creation function, or you can have a separate one if needed.
-  // For now, let's keep it separate for clarity in the refactoring.
-  function createSvgTextWithBackground2(mainSvgElement, textMessage, centerX) {
-    const paddingX = 20;
-    const paddingY = 15;
-    const lineHeight = 50;
-    const maxWidth = 500;
-
-    const textElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "text"
-    );
-    textElement.classList.add("svg-text-tooltip");
-    textElement.setAttribute("text-anchor", "middle");
-    textElement.setAttribute("x", centerX);
-    mainSvgElement.appendChild(textElement);
-
-    const words = textMessage.split(" ");
-    let currentLine = "";
-    let tspanElements = [];
-
-    for (let i = 0; i < words.length; i++) {
-      const testLine =
-        currentLine === "" ? words[i] : currentLine + " " + words[i];
-      textElement.textContent = testLine;
-      if (
-        textElement.getComputedTextLength() > maxWidth &&
-        currentLine !== ""
-      ) {
-        const tspan = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "tspan"
-        );
-        tspan.textContent = currentLine;
-        tspan.setAttribute("x", centerX);
-        tspan.setAttribute("dy", lineHeight);
-        tspanElements.push(tspan);
-        currentLine = words[i];
-      } else {
-        currentLine = testLine;
-      }
-    }
-    if (currentLine !== "") {
-      const tspan = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "tspan"
-      );
-      tspan.textContent = currentLine;
-      tspan.setAttribute("x", centerX);
-      tspan.setAttribute("dy", tspanElements.length === 0 ? 0 : lineHeight);
-      tspanElements.push(tspan);
-    }
-
-    textElement.textContent = "";
-    tspanElements.forEach((tspan) => textElement.appendChild(tspan));
-    const textBBox = textElement.getBBox();
-
-    const rectElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "rect"
-    );
-    rectElement.classList.add("svg-tooltip-background");
-    const rectX = textBBox.x - paddingX;
-    const rectY = textBBox.y - paddingY;
-    const rectWidth = textBBox.width + 2 * paddingX;
-    const rectHeight = textBBox.height + 2 * paddingY;
-    rectElement.setAttribute("x", rectX);
-    rectElement.setAttribute("y", rectY);
-    rectElement.setAttribute("width", rectWidth);
-    rectElement.setAttribute("height", rectHeight);
-
-    rectElement.style.opacity = "0";
-    rectElement.style.visibility = "hidden";
-    textElement.style.opacity = "0";
-    textElement.style.visibility = "hidden";
-    mainSvgElement.insertBefore(rectElement, textElement);
-    return { text: textElement, rect: rectElement };
-  }
+  // REMOVED: svgTooltipsConfig2 array and related functions (createSvgTextWithBackground2)
 
   function onEnterAnimationFrame2(e) {
     // Ensure LOTTIE_MAX_FRAME_INDEX_2 is set before using it
@@ -540,118 +245,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onAnimDomLoaded2(e) {
-    console.log(
-      "Lottie elements for slider 2 have been added to the DOM. Attaching SVG tooltip listeners."
-    );
+    console.log("Lottie elements for slider 2 have been added to the DOM.");
+    // REMOVED: All tooltip attachment logic from here
     const mainSvgElement = animationContainer2.querySelector("svg");
-    if (!mainSvgElement) {
-      console.warn(
-        "Main SVG element not found in animationContainer2. Cannot attach SVG tooltips."
-      );
-      return;
+    if (mainSvgElement) {
+      // Ensure mainSvgElement exists before trying to set pointerEvents
+      mainSvgElement.style.pointerEvents = "auto";
     }
-    mainSvgElement.style.pointerEvents = "auto";
-    svgTooltipsConfig2.forEach((config) => {
-      const targetSvgElement = document.getElementById(config.id);
-      if (targetSvgElement) {
-        console.log(`Found SVG element for tooltip: ${config.id}`);
-        targetSvgElement.style.pointerEvents = "auto";
-        // Combine mouseenter/mouseleave with touchstart/touchend for tooltips
-        const handleTooltipShow = () => {
-          if (
-            currentTooltipElements2.text &&
-            currentTooltipElements2.text.parentNode
-          ) {
-            currentTooltipElements2.text.parentNode.removeChild(
-              currentTooltipElements2.text
-            );
-            if (
-              currentTooltipElements2.rect &&
-              currentTooltipElements2.rect.parentNode
-            ) {
-              currentTooltipElements2.rect.parentNode.removeChild(
-                currentTooltipElements2.rect
-              );
-            }
-            currentTooltipElements2 = { text: null, rect: null };
-          }
-          const bbox = targetSvgElement.getBBox();
-          const ctm = targetSvgElement.getScreenCTM();
-          const svgPoint = mainSvgElement.createSVGPoint();
-          svgPoint.x = bbox.x + bbox.width / 2;
-          svgPoint.y = bbox.y;
-          const screenPoint = svgPoint.matrixTransform(ctm);
-          const inverseMainSvgCtm = mainSvgElement.getScreenCTM().inverse();
-          const svgGlobalPoint = screenPoint.matrixTransform(inverseMainSvgCtm);
-
-          currentTooltipElements2 = createSvgTextWithBackground2(
-            mainSvgElement,
-            config.text,
-            svgGlobalPoint.x
-          );
-          const paddingY = 15;
-          const clearanceFromElement = 20;
-          const rectBBoxAfterCreation = currentTooltipElements2.rect.getBBox();
-          const tooltipHeight = rectBBoxAfterCreation.height;
-          const finalRectY =
-            svgGlobalPoint.y - tooltipHeight - clearanceFromElement;
-          const translateY = finalRectY - rectBBoxAfterCreation.y;
-
-          currentTooltipElements2.rect.setAttribute(
-            "transform",
-            `translate(0, ${translateY})`
-          );
-          currentTooltipElements2.text.setAttribute(
-            "transform",
-            `translate(0, ${translateY})`
-          );
-
-          setTimeout(() => {
-            if (currentTooltipElements2.text) {
-              currentTooltipElements2.text.style.opacity = "1";
-              currentTooltipElements2.text.style.visibility = "visible";
-            }
-            if (currentTooltipElements2.rect) {
-              currentTooltipElements2.rect.style.opacity = "1";
-              currentTooltipElements2.rect.style.visibility = "visible";
-            }
-          }, 10);
-        };
-
-        const handleTooltipHide = () => {
-          if (currentTooltipElements2.text && currentTooltipElements2.rect) {
-            const textToFade = currentTooltipElements2.text;
-            const rectToFade = currentTooltipElements2.rect;
-
-            textToFade.style.opacity = "0";
-            textToFade.style.visibility = "hidden";
-            rectToFade.style.opacity = "0";
-            rectToFade.style.visibility = "hidden";
-
-            currentTooltipElements2 = { text: null, rect: null };
-
-            textToFade.addEventListener("transitionend", function handler() {
-              if (textToFade.parentNode) {
-                textToFade.parentNode.removeChild(textToFade);
-              }
-              if (rectToFade.parentNode) {
-                rectToFade.parentNode.removeChild(rectToFade);
-              }
-              textToFade.removeEventListener("transitionend", handler);
-            });
-          }
-        };
-
-        targetSvgElement.addEventListener("mouseenter", handleTooltipShow);
-        targetSvgElement.addEventListener("mouseleave", handleTooltipHide);
-        targetSvgElement.addEventListener("touchstart", handleTooltipShow);
-        targetSvgElement.addEventListener("touchend", handleTooltipHide);
-      } else {
-        console.warn(
-          `SVG element with ID '${config.id}' not found. Tooltip will not appear for this element.`
-        );
-      }
-    });
   }
 
   function onSliderDown2(e) {
@@ -695,23 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  // Overlay toggle buttons for slider 2
-  if (toggleSkinOverlayBtn2) {
-    toggleSkinOverlayBtn2.addEventListener("click", function () {
-      this.classList.toggle("active");
-      skinOverlay2.style.display =
-        skinOverlay2.style.display === "block" ? "none" : "block";
-    });
-  }
-  if (toggleBoneOverlayBtn2) {
-    toggleBoneOverlayBtn2.addEventListener("click", function () {
-      this.classList.toggle("active");
-      boneBehind2.style.display =
-        boneBehind2.style.display === "block" ? "none" : "block";
-      boneFront2.style.display =
-        boneFront2.style.display === "block" ? "none" : "block";
-    });
-  }
+  // REMOVED: Overlay toggle buttons for slider 2
 
   animInstance2.addEventListener("enterFrame", onEnterAnimationFrame2);
   animInstance2.addEventListener("data_ready", onAnimDataReady2);
@@ -761,6 +345,5 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Initial drawing of tick marks will now happen in onAnimDataReady2
-  // window.addEventListener("resize", scheduleTickMarkDraw2); // Moved to onAnimDataReady2 if you prefer
   window.addEventListener("resize", scheduleTickMarkDraw2);
 });
