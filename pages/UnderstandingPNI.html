@@ -545,7 +545,7 @@
               <div class="media-column">
                 <lottie-interactive
                   path="../animations/laceration-transection.json"
-                  interaction="click"
+                  interaction="morph"
                 >
                 </lottie-interactive>
               </div>
@@ -1296,6 +1296,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typogr/0.6.7/typogr.min.js"></script>
     <script>
       document.body.innerHTML = typogr.widont(document.body.innerHTML);
+    </script>
+    <script>
+      // Function to detect if it's likely a mobile/touch device
+      function isMobileDevice() {
+        // Check for common touch events API support
+        const hasTouchScreen =
+          "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+        // Check if the screen width matches typical mobile/tablet devices
+        // Using 1024px as a breakpoint to catch most tablets too,
+        // as they are typically touch-first.
+        const isSmallScreen = window.matchMedia("(max-width: 1024px)").matches;
+
+        // Basic user agent string check (less reliable but can be a fallback)
+        const userAgent =
+          navigator.userAgent || navigator.vendor || window.opera;
+        const isMobileUA =
+          /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|rim)|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
+            userAgent
+          ) ||
+          /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|ru)|android|apps|att|byu|ec(ko|web)|el(f|mo)|ht(c|ra)|iq(at|cv)|lg( g|\/(k|l|u)|50x|5) |libw|lynx|m1\-w|m3ga|m50\/|ma(g|ui)|md(k|a)|mwbs|printu|qa\-a|qc(07|12|21|32|60|62|65|68|70)|rc(80|100)n|r(u|ve)|s01|s55|s60|s70|s72|s75|scan|sys|t\-w|tdg|tf(cd|ga)|tr(wa|nu)|ts(70|v)|ue(c|s)|v(g|ae)|vc(ad|rv|sm|on|v)|vg(g|k)|zx(01|6)/i.test(
+            userAgent.substr(0, 4)
+          );
+
+        // Return true if it's likely a mobile device (has touch OR small screen OR mobile user agent)
+        return hasTouchScreen || isSmallScreen || isMobileUA;
+      }
+
+      // Get all lottie-interactive elements that need device-specific interaction
+      const lottieElements = document.querySelectorAll(
+        ".lottie-dynamic-interaction"
+      );
+
+      lottieElements.forEach((lottie) => {
+        if (isMobileDevice()) {
+          // If it's a mobile device, change the interaction to 'click'
+          lottie.setAttribute("interaction", "click");
+        }
+        // If it's a desktop device, the 'interaction="morph"' attribute
+        // will remain as it's set in the HTML.
+      });
     </script>
   </body>
 </html>
