@@ -1174,3 +1174,100 @@ footer {
 .custom-video-controls-overlay:not(.hide-controls-on-play) button {
   pointer-events: auto;
 }
+
+/* Style for your original image */
+.gallery-image {
+  cursor: pointer; /* Indicates it's clickable */
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px; /* Rounded corners for the image */
+  transition: 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.gallery-image:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* The Overlay (background) */
+.overlay {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  padding-top: 50px; /* Location of the box - top padding to leave space for close button */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+  text-align: center; /* Center the image within the overlay */
+}
+
+.overlay-content {
+  margin: auto;
+  display: block;
+  max-width: 100%; /* Allow image to exceed 90% for zoom */
+  max-height: 100vh; /* Allow image to exceed 85vh for zoom */
+  animation-name: zoom;
+  animation-duration: 0.6s;
+  object-fit: contain; /* Ensures the image fits without cropping when not zoomed/panned */
+
+  /* Add transition for smooth zoom and pan */
+  transition: transform 0.2s ease-out;
+
+  /* Initially set transform origin to top-left for easier calculations */
+  /* This will be dynamically updated by JS based on click */
+  transform-origin: 0% 0%;
+
+  cursor: zoom-in; /* Indicates it's zoomable */
+}
+
+/* When zoomed in, change cursor to grab */
+.overlay-content[style*="scale"]:not([style*="scale(1)"]) {
+  cursor: grab;
+}
+
+/* Caption of the overlay image */
+#caption {
+  margin-top: 10px;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  font-size: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The Close Button */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+  z-index: 1001; /* Make sure it's above the overlay */
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Add Animation (Zoom In Effect) */
+@keyframes zoom {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}

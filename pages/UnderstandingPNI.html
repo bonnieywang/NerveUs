@@ -593,6 +593,20 @@
             injury, which depends on what nerve tissues are damaged.
           </p>
 
+          <p>
+            The image below shows the different levels of peripheral nerve
+            injury and which structures are damaged at each level.
+          </p>
+          <img
+            src="../images/injury classification/injury_classification_summary image.png"
+            alt=""
+            class="gallery-image"
+          />
+          <div id="overlay" class="overlay">
+            <span class="close-button">&times;</span>
+            <img class="overlay-content" id="img-enlarged" />
+            <div id="caption"></div>
+          </div>
           <div class="tutorial-box">
             <div class="tutorial-box-icon">
               <img
@@ -603,7 +617,8 @@
             </div>
             <div class="tutorial-box-text">
               <p>
-                <span class="font-semibold">Click</span> through the different
+                For more details,
+                <span class="font-semibold">click</span> through the different
                 tabs to explore how PNI is categorized.
               </p>
             </div>
@@ -627,7 +642,7 @@
                   <div class="slideshow-container" id="slideshow1">
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/normalNeuron_V1.png"
+                        src="../images/injury classification/normalNeuron_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled."
                       />
@@ -635,7 +650,7 @@
 
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/grade1_V1.png"
+                        src="../images/injury classification/grade1_V2.png"
                         style="width: 100%"
                         alt="Image of neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath is damaged."
                       />
@@ -691,7 +706,7 @@
                   <div class="slideshow-container" id="slideshow2">
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/normalNeuron_V1.png"
+                        src="../images/injury classification/normalNeuron_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled."
                       />
@@ -699,7 +714,7 @@
 
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/grade2_V1.png"
+                        src="../images/injury classification/grade2_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, and epineurium are damaged."
                       />
@@ -707,7 +722,7 @@
 
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/grade3_V1.png"
+                        src="../images/injury classification/grade3_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, and epineurium are damaged."
                       />
@@ -715,7 +730,7 @@
 
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/grade4_V1.png"
+                        src="../images/injury classification/grade4_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, epineurium, and perineurium are damaged."
                       />
@@ -792,7 +807,7 @@
                   <div class="slideshow-container" id="slideshow3">
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/normalNeuron_V1.png"
+                        src="../images/injury classification/normalNeuron_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled."
                       />
@@ -800,7 +815,7 @@
 
                     <div class="mySlides fade">
                       <img
-                        src="../images/injury classification/grade5_V1.png"
+                        src="../images/injury classification/grade5_V2.png"
                         style="width: 100%"
                         alt="Image of normal neuron with the myelin sheath, axon, epineurium, perineurium, and endoneurium labelled. The myelin sheath, axon, epineurium, perineurium, and endoneurium are damaged."
                       />
@@ -1358,6 +1373,245 @@
         }
         // If it's a desktop device, the 'interaction="morph"' attribute
         // will remain as it's set in the HTML.
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get the elements
+        const galleryImage = document.querySelector(".gallery-image");
+        const overlay = document.getElementById("overlay");
+        const enlargedImg = document.getElementById("img-enlarged");
+        const captionText = document.getElementById("caption");
+        const closeButton = document.querySelector(".close-button");
+
+        // Zoom state variables
+        let currentZoom = 1;
+        let panX = 0;
+        let panY = 0;
+        const ZOOM_IN_FACTOR = 2; // How much to zoom in
+        const ZOOM_OUT_FACTOR = 1; // Factor to zoom out (back to original size)
+
+        // Flag to track if the image is currently zoomed in
+        let isZoomed = false;
+
+        // Variables for click vs. drag detection
+        let isDragging = false; // True if the user is currently dragging
+        let startPanX, startPanY;
+        let startMouseX, startMouseY;
+        let clickStartX, clickStartY; // Store mouse position on mousedown for click detection
+        const DRAG_THRESHOLD = 5; // Pixels of movement to consider it a drag, not a click
+
+        // Function to apply zoom and pan transform
+        function applyTransform() {
+          enlargedImg.style.transform = `scale(${currentZoom}) translate(${panX}px, ${panY}px)`;
+          enlargedImg.style.transformOrigin = "0% 0%"; // Reset to top-left for easier calculations
+        }
+
+        // When the user clicks on the gallery image, open the overlay
+        galleryImage.onclick = function () {
+          overlay.style.display = "block";
+          enlargedImg.src = this.src;
+          captionText.innerHTML = this.alt;
+
+          // Reset zoom and pan when opening a new image
+          currentZoom = 1;
+          panX = 0;
+          panY = 0;
+          isZoomed = false; // Ensure it's not zoomed when opening
+          applyTransform(); // Apply initial state
+
+          // Reset cursor on image when opening overlay
+          enlargedImg.style.cursor = "zoom-in";
+        };
+
+        // When the user clicks on the close button, close the overlay
+        closeButton.onclick = function () {
+          overlay.style.display = "none";
+          // Reset transform and zoom state when closing
+          enlargedImg.style.transform = "";
+          currentZoom = 1;
+          panX = 0;
+          panY = 0;
+          isZoomed = false;
+          enlargedImg.style.cursor = "zoom-in"; // Ensure cursor is zoom-in for next open
+        };
+
+        // Optional: Close the overlay if the user clicks anywhere outside the image content
+        overlay.onclick = function (event) {
+          if (event.target === overlay) {
+            overlay.style.display = "none";
+            enlargedImg.style.transform = ""; // Reset transform
+            currentZoom = 1;
+            panX = 0;
+            panY = 0;
+            isZoomed = false;
+            enlargedImg.style.cursor = "zoom-in"; // Ensure cursor is zoom-in for next open
+          }
+        };
+
+        // Optional: Close the overlay if the user presses the ESC key
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && overlay.style.display === "block") {
+            overlay.style.display = "none";
+            enlargedImg.style.transform = ""; // Reset transform
+            currentZoom = 1;
+            panX = 0;
+            panY = 0;
+            isZoomed = false;
+            enlargedImg.style.cursor = "zoom-in"; // Ensure cursor is zoom-in for next open
+          }
+        });
+
+        // --- Mousedown for Pan and Click Detection ---
+        enlargedImg.addEventListener("mousedown", (e) => {
+          isDragging = false; // Assume it's a click initially
+          clickStartX = e.clientX;
+          clickStartY = e.clientY;
+
+          // If zoomed, allow initiating a drag
+          if (isZoomed) {
+            // Set up drag variables
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            startPanX = panX;
+            startPanY = panY;
+            enlargedImg.style.cursor = "grabbing"; // Indicate that it's draggable
+          }
+
+          // Add temporary listeners for mousemove and mouseup
+          document.addEventListener("mousemove", handleMouseMove);
+          document.addEventListener("mouseup", handleMouseUp);
+
+          e.preventDefault(); // Prevent default image dragging behavior
+        });
+
+        // --- Mousemove for Pan ---
+        function handleMouseMove(e) {
+          // Only consider it a drag if we're currently zoomed AND the mouse has moved enough
+          if (isZoomed) {
+            const dxThreshold = Math.abs(e.clientX - clickStartX);
+            const dyThreshold = Math.abs(e.clientY - clickStartY);
+
+            if (dxThreshold > DRAG_THRESHOLD || dyThreshold > DRAG_THRESHOLD) {
+              isDragging = true; // Confirmed it's a drag
+              enlargedImg.style.cursor = "grabbing"; // Keep grab cursor during drag
+
+              const currentDx = e.clientX - startMouseX;
+              const currentDy = e.clientY - startMouseY;
+
+              let tempPanX = startPanX + currentDx;
+              let tempPanY = startPanY + currentDy;
+
+              // Boundary checks for panning
+              const zoomedImgWidth = enlargedImg.naturalWidth * currentZoom;
+              const zoomedImgHeight = enlargedImg.naturalHeight * currentZoom;
+              const overlayWidth = overlay.offsetWidth;
+              const overlayHeight = overlay.offsetHeight;
+
+              // If the zoomed image is smaller than the overlay, center it
+              if (zoomedImgWidth < overlayWidth) {
+                tempPanX = (overlayWidth - zoomedImgWidth) / 2;
+              } else {
+                // Constrain panX to prevent image from moving off-screen
+                if (tempPanX > 0) tempPanX = 0;
+                if (tempPanX < overlayWidth - zoomedImgWidth)
+                  tempPanX = overlayWidth - zoomedImgWidth;
+              }
+
+              if (zoomedImgHeight < overlayHeight) {
+                tempPanY = (overlayHeight - zoomedImgHeight) / 2;
+              } else {
+                // Constrain panY to prevent image from moving off-screen
+                if (tempPanY > 0) tempPanY = 0;
+                if (tempPanY < overlayHeight - zoomedImgHeight)
+                  tempPanY = overlayHeight - zoomedImgHeight;
+              }
+
+              panX = tempPanX;
+              panY = tempPanY;
+              applyTransform();
+            }
+          }
+        }
+
+        // --- Mouseup for Click/Pan Completion ---
+        function handleMouseUp(e) {
+          document.removeEventListener("mousemove", handleMouseMove);
+          document.removeEventListener("mouseup", handleMouseUp);
+
+          if (!isDragging) {
+            // If it was NOT a drag (i.e., it was a click)
+            // Execute the zoom-in/zoom-out logic
+            if (!isZoomed) {
+              // If not zoomed, zoom in
+              const imgRect = enlargedImg.getBoundingClientRect();
+
+              // Calculate click coordinates relative to the image
+              const clickX = e.clientX - imgRect.left;
+              const clickY = e.clientY - imgRect.top;
+
+              // Calculate the "true" coordinates on the original (unscaled) image
+              const originalX = (clickX - panX) / currentZoom;
+              const originalY = (clickY - panY) / currentZoom;
+
+              // Determine new zoom level (zoom in)
+              const newZoom = currentZoom * ZOOM_IN_FACTOR;
+
+              const overlayWidth = overlay.offsetWidth;
+              const overlayHeight = overlay.offsetHeight;
+
+              // Calculate new pan so the clicked point is centered
+              const targetX = originalX * newZoom;
+              const targetY = originalY * newZoom;
+
+              let newPanX = overlayWidth / 2 - targetX;
+              let newPanY = overlayHeight / 2 - targetY;
+
+              // Boundary checks for panning
+              const zoomedImgWidth = enlargedImg.naturalWidth * newZoom;
+              const zoomedImgHeight = enlargedImg.naturalHeight * newZoom;
+
+              if (zoomedImgWidth < overlayWidth) {
+                newPanX = (overlayWidth - zoomedImgWidth) / 2; // Center if smaller than overlay
+              } else {
+                if (newPanX > 0) newPanX = 0;
+                if (newPanX < overlayWidth - zoomedImgWidth)
+                  newPanX = overlayWidth - zoomedImgWidth;
+              }
+
+              if (zoomedImgHeight < overlayHeight) {
+                newPanY = (overlayHeight - zoomedImgHeight) / 2; // Center if smaller than overlay
+              } else {
+                if (newPanY > 0) newPanY = 0;
+                if (newPanY < overlayHeight - zoomedImgHeight)
+                  newPanY = overlayHeight - zoomedImgHeight;
+              }
+
+              // Apply new zoom and pan
+              currentZoom = newZoom;
+              panX = newPanX;
+              panY = newPanY;
+              isZoomed = true; // Mark as zoomed in
+              enlargedImg.style.cursor = "grab"; // Change cursor to grab/pan
+              applyTransform();
+            } else {
+              // If already zoomed, zoom out
+              currentZoom = ZOOM_OUT_FACTOR; // Back to original size (1)
+              panX = 0; // Reset pan
+              panY = 0; // Reset pan
+              isZoomed = false; // Mark as not zoomed
+              enlargedImg.style.cursor = "zoom-in"; // Change cursor to zoom in
+              applyTransform();
+            }
+          }
+
+          // Reset cursor based on zoom state after drag/click
+          if (isZoomed) {
+            enlargedImg.style.cursor = "grab";
+          } else {
+            enlargedImg.style.cursor = "zoom-in";
+          }
+        }
       });
     </script>
   </body>
