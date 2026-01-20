@@ -328,9 +328,13 @@ header .nav-links {
   }
 }
 
+.logo {
+  flex-shrink: 0; /* Prevents the container from being squished horizontally */
+}
+
 .logo img {
   height: 48px;
-  width: auto; /* Maintain aspect ratio */
+  width: auto;
   display: block;
 }
 
